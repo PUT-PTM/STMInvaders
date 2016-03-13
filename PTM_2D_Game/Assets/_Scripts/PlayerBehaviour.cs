@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerBehaviour : MonoBehaviour {
 	public float speed;
 	private Rigidbody2D rb;
-	private bool lastVertical;		// last move in vertical axis
-	private bool lastHorizontal;    //last move in horizontal axis
+	private bool lastVertical;		// TODO last move in vertical axis
+	private bool lastHorizontal;    // TODO last move in horizontal axis
 
 	public PlayerSpawner spawner;
+	public Text lifes;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
+		lifes.text = "Lifes left: " + GlobalStatics.PLAYER_LIFES.ToString();
 	}
 	
 	/* version 4 kinematic body
@@ -33,8 +36,9 @@ public class PlayerBehaviour : MonoBehaviour {
 		rb.AddForce(new Vector2(x, y) * Time.fixedDeltaTime * speed);
 		//rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
 	}
-
-	void OnDestroy() {
+	void OnDisable() {
+		GlobalStatics.PLAYER_IS_ALIVE = false;
+		lifes.text = "Lifes left: " + GlobalStatics.PLAYER_LIFES.ToString();
 		spawner.gameObject.SetActive(true);
 	}
 }

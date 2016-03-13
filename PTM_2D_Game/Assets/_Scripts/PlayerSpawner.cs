@@ -2,17 +2,24 @@
 using System.Collections;
 
 public class PlayerSpawner : MonoBehaviour {
-	public Transform playerPrefab;
+	public Transform playerPosition;
 	private float timer;
+
+	void Awake() {
+		// It's 
+		GlobalStatics.PLAYER_LIFES++;
+	}
 
 	void OnEnable () {
 		timer = 3;
 		if(timer > 0) {
 			timer -= Time.deltaTime;
 		}
-		Vector3 pos = GetComponent<Transform>().position;
-		Quaternion quat = GetComponent<Transform>().rotation;
-		Instantiate(playerPrefab, pos, quat);
+		GlobalStatics.PLAYER_IS_ALIVE = true;
+		GlobalStatics.PLAYER_LIFES--;
+		
+		playerPosition.position = GetComponent<Transform>().position;
+		playerPosition.gameObject.SetActive(true);
 		gameObject.SetActive(false);
 	}
 }
