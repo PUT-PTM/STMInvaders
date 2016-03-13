@@ -5,14 +5,15 @@ public class PlayerBehaviour : MonoBehaviour {
 	public float speed;
 	private Rigidbody2D rb;
 	private bool lastVertical;		// last move in vertical axis
-	private bool lastHorizontal;	//last move in horizontal axis
+	private bool lastHorizontal;    //last move in horizontal axis
+
+	public PlayerSpawner spawner;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
 	}
-
-	// Update is called once per frame
+	
 	/* version 4 kinematic body
 	void Update () {
 		Vector3 pos = rb.transform.position;
@@ -31,5 +32,9 @@ public class PlayerBehaviour : MonoBehaviour {
 
 		rb.AddForce(new Vector2(x, y) * Time.fixedDeltaTime * speed);
 		//rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
+	}
+
+	void OnDestroy() {
+		spawner.gameObject.SetActive(true);
 	}
 }
