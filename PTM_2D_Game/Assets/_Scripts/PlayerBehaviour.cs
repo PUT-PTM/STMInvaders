@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System;
 
 public class PlayerBehaviour : MonoBehaviour {
 	public float speed;
 	private Rigidbody2D rb;
-	private bool lastVertical;		// TODO last move in vertical axis
-	private bool lastHorizontal;    // TODO last move in horizontal axis
+	private float moveVertical;
+	private float moveHorizontal;
 
 	public PlayerSpawner spawner;
-	public Text lifes;
+	public LifesScript lifes;
 
 	// Use this for initialization
 	void Start () {
+		moveHorizontal = 0f;
+		moveVertical = 0f;
 		rb = GetComponent<Rigidbody2D>();
-		lifes.text = "Lifes left: " + GlobalStatics.PLAYER_LIFES.ToString();
+		lifes.UPDATE();
 	}
 	
 	/* version 4 kinematic body
@@ -33,12 +35,20 @@ public class PlayerBehaviour : MonoBehaviour {
 		float x = Input.GetAxisRaw("Horizontal");
 		float y = Input.GetAxisRaw("Vertical");
 
-		rb.AddForce(new Vector2(x, y) * Time.fixedDeltaTime * speed);
-		//rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
+		if(x != 0 && x != moveHorizontal) {
+			rb.velocity = new Vector2(rb.velocity.x * 0.1f, rb.velocity.y);
+			moveHorizontal = x;
+		}
+		if(y != 0 && y != moveVertical) {
+			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
+			moveVertical = y;
+		}
+		//rb.AddForce(new Vector2(x, y) * Time.deltaTime * speed);
+		rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
 	}
 	void OnDisable() {
 		GlobalStatics.PLAYER_IS_ALIVE = false;
-		lifes.text = "Lifes left: " + GlobalStatics.PLAYER_LIFES.ToString();
+		lifes.UPDATE();
 		spawner.gameObject.SetActive(true);
 	}
 }

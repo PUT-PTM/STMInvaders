@@ -6,7 +6,6 @@ public class PlayerSpawner : MonoBehaviour {
 	private float timer;
 
 	void Awake() {
-		// It's 
 		GlobalStatics.PLAYER_LIFES++;
 	}
 
