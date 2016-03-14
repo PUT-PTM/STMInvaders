@@ -21,7 +21,8 @@ public class PlayerShooting : MonoBehaviour {
 		else if (Input.GetKeyDown(KeyCode.Space)) {
 			// mechanics for shooting
 
-
+			Transform bullet = Instantiate(bullets[0]);
+			bullet.position = player.position;
 
 			// setting flag to true (holding space)
 			spaceHolded = true;
