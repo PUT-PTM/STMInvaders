@@ -12,11 +12,13 @@ public class PlayerBehaviour : MonoBehaviour {
 	public LifesScript lifes;
 
 	// Use this for initialization
-	void Start () {
-		moveHorizontal = 0f;
-		moveVertical = 0f;
-		rb = GetComponent<Rigidbody2D>();
-		lifes.UPDATE();
+	void Start() {
+		if (lifes) {
+			moveHorizontal = 0f;
+			moveVertical = 0f;
+			rb = GetComponent<Rigidbody2D>();
+			lifes.UPDATE();
+		} else Debug.LogError("No reference to LIFES");
 	}
 	
 	/* version 4 kinematic body
@@ -47,8 +49,10 @@ public class PlayerBehaviour : MonoBehaviour {
 		rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
 	}
 	void OnDisable() {
-		GlobalStatics.PLAYER_IS_ALIVE = false;
-		lifes.UPDATE();
-		spawner.gameObject.SetActive(true);
+		if (lifes) {
+			GlobalStatics.PLAYER_IS_ALIVE = false;
+			lifes.UPDATE();
+			spawner.gameObject.SetActive(true);
+		}
 	}
 }
