@@ -49,10 +49,19 @@ public class PlayerBehaviour : MonoBehaviour {
 		rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
 	}
 	void OnDisable() {
+		Debug.Log("Entered disable mode - u died? :>");
 		if (lifes) {
 			GlobalStatics.PLAYER_IS_ALIVE = false;
+			GlobalStatics.PLAYER_LIFES--;
 			lifes.UPDATE();
 			spawner.gameObject.SetActive(true);
 		}
+	}
+
+	void OnTriggerEnter2D(Collider2D trigger) {
+		if (trigger.gameObject.tag == "EnemyBullet") {
+			Destroy(trigger.gameObject);
+			gameObject.SetActive(false);
+		} else Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
 	}
 }
