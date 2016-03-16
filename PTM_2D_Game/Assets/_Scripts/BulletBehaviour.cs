@@ -5,6 +5,7 @@ public class BulletBehaviour : MonoBehaviour {
 	private Transform pos;
 	public float speed;
 
+	private string type;
 	// Use this for initialization
 	void Start () {
 		pos = GetComponent<Transform>();
@@ -12,6 +13,22 @@ public class BulletBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		pos.position += Vector3.up * Time.deltaTime * speed;
+		switch (type) {
+			case "EnemyBullet": pos.position -= Vector3.up * Time.deltaTime * speed;
+				break;
+			case "PlayerBullet": pos.position += Vector3.up * Time.deltaTime * speed;
+				break;
+		}
+		
+	}
+
+	public void SetType(string type) {
+		this.type = type;
+		switch (type) {
+			case "EnemyBullet": tag = "EnemyBullet";
+				break;
+			case "PlayerBullet": tag = "PlayerBullet";
+				break;
+		}
 	}
 }
