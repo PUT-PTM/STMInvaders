@@ -2,23 +2,21 @@
 using System.Collections;
 
 public class PlayerSpawner : MonoBehaviour {
-	public Transform playerPosition;
-	private float timer;
+	public Transform player;
+	public float timer;
 
-	void Awake() {
-		GlobalStatics.PLAYER_LIFES++;
-	}
+	void Update() {
+		if (!GlobalStatics.PLAYER_IS_ALIVE) {
+			if (timer > 0) {
+				timer -= Time.deltaTime;
+			} else {
+				GlobalStatics.PLAYER_IS_ALIVE = true;
 
-	void OnEnable () {
-		timer = 3;
-		if(timer > 0) {
-			timer -= Time.deltaTime;
+				player.position = GetComponent<Transform>().position;
+				player.gameObject.SetActive(true);
+
+				timer = 3;
+			}
 		}
-		GlobalStatics.PLAYER_IS_ALIVE = true;
-		GlobalStatics.PLAYER_LIFES--;
-		
-		playerPosition.position = GetComponent<Transform>().position;
-		playerPosition.gameObject.SetActive(true);
-		gameObject.SetActive(false);
 	}
 }

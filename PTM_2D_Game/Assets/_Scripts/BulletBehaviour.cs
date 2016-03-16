@@ -18,8 +18,7 @@ public class BulletBehaviour : MonoBehaviour {
 				break;
 			case "PlayerBullet": pos.position += Vector3.up * Time.deltaTime * speed;
 				break;
-		}
-		
+		}		
 	}
 
 	public void SetType(string type) {

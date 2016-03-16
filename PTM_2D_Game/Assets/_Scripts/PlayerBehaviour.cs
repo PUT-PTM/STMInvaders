@@ -49,19 +49,28 @@ public class PlayerBehaviour : MonoBehaviour {
 		rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
 	}
 	void OnDisable() {
-		Debug.Log("Entered disable mode - u died? :>");
+		Debug.Log("Player died");
 		if (lifes) {
-			GlobalStatics.PLAYER_IS_ALIVE = false;
-			GlobalStatics.PLAYER_LIFES--;
-			lifes.UPDATE();
-			spawner.gameObject.SetActive(true);
+			if (GlobalStatics.PLAYER_LIFES > 0) {
+				GlobalStatics.PLAYER_IS_ALIVE = false;
+				GlobalStatics.PLAYER_LIFES--;
+				lifes.UPDATE();
+			} else Debug.LogError("Sorry, no lifes left :P");
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D trigger) {
-		if (trigger.gameObject.tag == "EnemyBullet") {
-			Destroy(trigger.gameObject);
-			gameObject.SetActive(false);
-		} else Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
+		switch (trigger.gameObject.tag) {
+			case "PlayerBullet":;
+				break;
+			case "EnemyBullet": {
+					Destroy(trigger.gameObject);
+					gameObject.SetActive(false);
+				}
+				break;
+			default:
+				Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
+				break;
+		}
 	}
 }

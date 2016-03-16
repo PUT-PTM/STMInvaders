@@ -42,9 +42,16 @@ public class EnemyBehaviour : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D trigger) {
-		if (trigger.gameObject.tag == "Bullet") {
-			Destroy(trigger.gameObject);
-			Destroy(gameObject);
-		} else Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
+		switch (trigger.gameObject.tag) {
+			case "PlayerBullet": {
+					Destroy(trigger.gameObject);
+					Destroy(gameObject);
+				}
+				break;
+			case "EnemyBullet":;
+				break;
+			default: Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
+				break;
+		}
 	}
 }
