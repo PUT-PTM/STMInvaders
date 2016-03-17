@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 
 public class EnemyBehaviour : MonoBehaviour {
 	public Transform[] bullets = new Transform[0];
-	public Transform target;
-	public Transform enemy;
+	private Transform enemy;
 	public float rotationSpeed;
 
 	public float shootDelay;
@@ -21,16 +21,8 @@ public class EnemyBehaviour : MonoBehaviour {
 			AddBullet();
 			shootDelay = 3f;
 		} else shootDelay -= Time.deltaTime;
+		
 
-		//transform.position = Vector2.Lerp(
-		//	transform.position, target.transform.position, 
-		//	Time.deltaTime * rotationSpeed);
-
-		//nie działa -.-
-		//Vector3 vectorToTarget = target.position - transform.position;
-		//float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
-		//Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-		//transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotationSpeed);
 	}
 
 	private void AddBullet() {
@@ -53,5 +45,9 @@ public class EnemyBehaviour : MonoBehaviour {
 			default: Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
 				break;
 		}
+	}
+
+	public Text text {
+		get; set;
 	}
 }
