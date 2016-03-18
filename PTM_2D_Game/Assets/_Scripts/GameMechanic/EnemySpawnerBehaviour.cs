@@ -7,8 +7,9 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 	public Text text;
 	public Transform[] enemies = new Transform[0];
 
-	private bool dupa = true;
-	// Use this for initialization
+	// temporary flag, wanna do this better
+	private bool tempFlag = true;
+
 	void Start () {
 		if (!canvas) {
 			Debug.LogError("Not added canvas reference!!!");
@@ -21,10 +22,9 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			return;
 		}
 	}
-	
-	// Update is called once per frame
+	// At this moment spawn only one enemy for tests
 	void Update () {
-		if (dupa) {
+		if (tempFlag) {
 			//cloning objects
 			Transform enemy = Instantiate(enemies[0]);
 			Text textForClone = Instantiate(text);
@@ -39,7 +39,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			textForClone.GetComponent<EnemyTextBehaviour>().target = enemy;
 
 
-			dupa = false;
+			tempFlag = false;
 		}
 	}
 }

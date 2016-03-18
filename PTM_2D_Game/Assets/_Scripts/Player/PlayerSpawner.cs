@@ -3,10 +3,11 @@ using System.Collections;
 
 public class PlayerSpawner : MonoBehaviour {
 	public Transform player;
-	public float Timer;
-
 	public RespawnShield shield;
+	public float timeToRespawn;
+	public float timer;			
 
+	// Check references for easier debugging
 	void Start() {
 		if (!player) {
 			Debug.LogError("No player transform attached!!!");
@@ -19,11 +20,12 @@ public class PlayerSpawner : MonoBehaviour {
 			return;
 		}
 	}
-
+	// Spawn player if possible (when there are still some lifes and he's dead)
+	// Script deactivating after player respawn
 	void Update() {
 		if (!Statics.PLAYER_IS_ALIVE && Statics.PLAYER_LIFES > 0) {
-			if (Timer > 0) {
-				Timer -= Time.deltaTime;
+			if (timer > 0) {
+				timer -= Time.deltaTime;
 			} else {
 				Statics.PLAYER_IS_ALIVE = true;
 
@@ -31,7 +33,7 @@ public class PlayerSpawner : MonoBehaviour {
 				player.gameObject.SetActive(true);
 				shield.ShieldOn();
 
-				Timer = 3;
+				timer = timeToRespawn;
 			}
 		}
 	}

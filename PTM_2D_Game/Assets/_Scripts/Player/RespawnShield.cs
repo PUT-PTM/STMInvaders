@@ -2,8 +2,12 @@
 using System.Collections;
 
 public class RespawnShield : MonoBehaviour {
-	public float ShieldMaxTime;
+	public float shieldMaxTime;
 	public float remainingTime;
+	public float resizeTime = 1;
+	// 0 - reduce, 1 - expand shield
+	public bool direction;
+
 	private Transform shield;
 	private SpriteRenderer sprite;
 	private Color color;
@@ -11,53 +15,49 @@ public class RespawnShield : MonoBehaviour {
 	void Start() {
 		shield = GetComponent<Transform>();
 		sprite = GetComponent<SpriteRenderer>();
-		Direction = true;
+		direction = true;
 	}
-
-	public float ResizeTime = 1;
-	// 0 - reduce, 1 - expand
-	public bool Direction;
-	
+	// Mechanic for shield resizing and changing opacity
 	void Update() {
 		if(remainingTime > 0) {
 			color = sprite.color;
-			color = new Color(color.r, color.g, color.b, remainingTime / ShieldMaxTime);
+			color = new Color(color.r, color.g, color.b, remainingTime / shieldMaxTime);
 			sprite.color = color;
 
-			if (Direction) {
-				if (ResizeTime > 0) {
+			if (direction) {
+				if (resizeTime > 0) {
 					//zwiększanie
 					shield.localScale += new Vector3(0.001f, 0.001f);
-					ResizeTime -= Time.deltaTime;
+					resizeTime -= Time.deltaTime;
 				} else {
-					Direction = false;
-					ResizeTime = 1;
+					direction = false;
+					resizeTime = 1;
 				}
 			} else {
-				if (ResizeTime > 0) {
+				if (resizeTime > 0) {
 					//zmniejszanie
 					shield.localScale -= new Vector3(0.001f, 0.001f);
-					ResizeTime -= Time.deltaTime;
+					resizeTime -= Time.deltaTime;
 				} else {
-					Direction = true;
-					ResizeTime = 1;
+					direction = true;
+					resizeTime = 1;
 				}
 			}
 		}
 	}
-
+	// Check if shield still have time to work or not
 	void LateUpdate () {
 		shield.position = GetComponentInParent<Transform>().position;
 		if (remainingTime > 0) {
 			remainingTime -= Time.deltaTime;
 		} else gameObject.SetActive(false);
 	}
-
+	// public method to switch shields on
 	public void ShieldOn() {
-		remainingTime = ShieldMaxTime;
+		remainingTime = shieldMaxTime;
 		gameObject.SetActive(true);
 	}
-
+	// Destroying enemy bullets if enabled
 	void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.tag) {
 			case "PlayerBullet": return;

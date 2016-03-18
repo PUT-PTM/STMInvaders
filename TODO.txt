@@ -1,0 +1,34 @@
+# Game TODO list
+
+1. More varios types of bullets and weapons
+	a) For player and enemies
+	b) Weapons for enemies based on type (see 3d)
+	c) Shop with  :>
+2. Shop
+	a) Various, better weapons (faster, more bullets etc)
+	b) Additional effects (?)
+	c) Shields agains anamies (something like extra lifes)
+	d) Helpers (small ships for help ?)
+3. Enemies
+	a) Better spawning (edit EnemiesSpawner)
+	b) A little more advanced moves (not only from left to right like this one right now :P )
+	c) Customizable tracks and algoritms for enemies (HARD!!!)
+	d) More "types" of enemies (more hp, various speed etc)
+	e) BOSSES - graaarrrr :P
+4. Levels!!!
+5. Funny texts for enemies
+
+##########################Hot TODO list##########################
+GameObject for handle reference to all bullets (optimization fix - now all enemies and player store it)
+	
+# STM TODO list
+
+
+# Graphics TODO list (list of needed graphics for game)
+
+1. More ships (especially for enemies)
+2. More beatifull bullets and weapons
+	a) GIMME LASER BEAM :D (red for bosses and blue for player 4 example)
+3. Background (stars etc)
+4. 
+

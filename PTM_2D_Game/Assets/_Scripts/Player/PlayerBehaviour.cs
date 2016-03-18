@@ -3,27 +3,26 @@ using UnityEngine.UI;
 using System;
 
 public class PlayerBehaviour : MonoBehaviour {
-	public float speed;
 	public PlayerSpawner spawner;
 	public LifesScript lifes;
+	public float speed;
 
 	private Rigidbody2D rb;
 	private RespawnShield shield;
 	private float moveVertical;
 	private float moveHorizontal;
-
-	// Use this for initialization
+	
 	void Start() {
 		if (lifes) {
 			moveHorizontal = 0f;
 			moveVertical = 0f;
-			rb = GetComponent<Rigidbody2D>();
 			lifes.UPDATE();
+
+			rb = GetComponent<Rigidbody2D>();
+			shield = GetComponentInChildren<RespawnShield>();
 		} else Debug.LogError("No reference to LIFES");
-
-		shield = GetComponentInChildren<RespawnShield>();
 	}
-
+	// Checking axis and moving player
 	void Update() {
 		float x = Input.GetAxisRaw("Horizontal");
 		float y = Input.GetAxisRaw("Vertical");
@@ -38,6 +37,8 @@ public class PlayerBehaviour : MonoBehaviour {
 		}
 		rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
 	}
+	// Called when player dying, check lifes left and decide
+	// if player could still play or you get deadly message :>
 	void OnDisable() {
 		if (lifes) {
 			Debug.Log("Player died");
@@ -53,17 +54,19 @@ public class PlayerBehaviour : MonoBehaviour {
 			}
 		}
 	}
-
+	// Reaction for various triggers
 	void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.gameObject.tag) {
 			case "PlayerBullet": return;
 			case "PlayerShield": return;
 			case "EnemyBullet": {
+					// Destroy bullet and (if shield isn't active) - kill player
 					Destroy(trigger.gameObject);
 					if(!shield.gameObject.activeSelf) gameObject.SetActive(false);
 				}
 				break;
 			default:
+				// Note for debugging
 				Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
 				break;
 		}

@@ -7,25 +7,26 @@ public class EnemyTextBehaviour : MonoBehaviour {
 
 	private Transform pos;
 	private Text text;
-	// Use this for initialization
-	void Start () {
-		pos = GetComponent<Transform>();
-		pos.position = new Vector3(target.position.x, target.position.y + 10);
-		text = GetComponent<Text>();
-		text.text = "___";
-	}
-
 	private bool ImDead = false;
 	private float TimeToDead = 2f;
-	// Update is called once per frame
+
+	void Start () {
+		pos = GetComponent<Transform>();
+		text = GetComponent<Text>();
+
+		pos.position = new Vector3(target.position.x, target.position.y + 10);
+		text.text = "";
+	}
+	// Text follow enemy and when he dies, show message (at this moment)
 	void Update () {
+		// Follow enemy ship
 		if (target) {
 			pos.position = new Vector3(target.position.x, target.position.y + 10);
 		} else {
 			text.text = "You killed me!!!";
 			ImDead = true;
 		}
-
+		// Shows text
 		if (ImDead) {
 			if (TimeToDead < 0) {
 				Destroy(gameObject);

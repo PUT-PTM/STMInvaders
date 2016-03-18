@@ -2,16 +2,15 @@
 using System.Collections;
 
 public class BulletBehaviour : MonoBehaviour {
-	private Transform pos;
 	public float speed;
 
+	private Transform pos;
 	private string type;
-	// Use this for initialization
+
 	void Start () {
 		pos = GetComponent<Transform>();
 	}
-	
-	// Update is called once per frame
+	// Move based on type (enemy or player)
 	void Update () {
 		switch (type) {
 			case "EnemyBullet": pos.position -= Vector3.up * Time.deltaTime * speed;
@@ -20,7 +19,7 @@ public class BulletBehaviour : MonoBehaviour {
 				break;
 		}		
 	}
-
+	// Public function for set bullets type
 	public void SetType(string type) {
 		this.type = type;
 		switch (type) {
