@@ -11,14 +11,14 @@
 	d) Helpers (small ships for help ?)
 3. Enemies
 	a) Better spawning (edit EnemiesSpawner)
-	b) A little more advanced moves (not only from left to right like this one right now :P )
+	b) A little more advanced moves (not only from left to right like this one right now )
 	c) Customizable tracks and algoritms for enemies (HARD!!!)
 	d) More "types" of enemies (more hp, various speed etc)
-	e) BOSSES - graaarrrr :P
-4. Levels!!!
+	e) BOSSES
+4. Levels
 5. Funny texts for enemies
 
-##########################Hot TODO list##########################
+########################## Hot TODO list ##########################
 GameObject for handle reference to all bullets (optimization fix - now all enemies and player store it)
 	
 # STM TODO list
@@ -28,7 +28,7 @@ GameObject for handle reference to all bullets (optimization fix - now all enemi
 
 1. More ships (especially for enemies)
 2. More beatifull bullets and weapons
-	a) GIMME LASER BEAM :D (red for bosses and blue for player 4 example)
+	a) LASER BEAM (red for bosses and blue for player 4 example)
 3. Background (stars etc)
 4. 
 
