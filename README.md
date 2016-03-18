@@ -2,20 +2,24 @@
 
 Overview
 --------
-Section TODO
+This is game for PC with microcontroler STM32f4-Discovery as "GamePad".
 
 Description
 -----------
-Section TODO
+We will code programm for microcontroler which gives to it ability to
+send simple command like "GamePad" and read it in game on PC.
 
 Tools
 -----
-Coocox CoIDE 
-...
+Coocox CoIDE - programm for microcontroller
+Unity3D - game engine
+Microsoft Visual Studio 2015 Enterprise (from Dreamspark) - C# scripts for game
 
 How to run
 ----------
-Section TODO
+At this moment project isn't possible to run. However if you have Unity3d, you can
+build uncompleted game in Unity (it's still nothing special, but some of game
+mechanics work).
 
 How to compile
 --------------
@@ -23,11 +27,12 @@ Section TODO
 
 Future improvements
 -------------------
-Section TODO
+See TODO.txt, there is list of some planned features:
+https://github.com/PUT-PTM/STMInvaders/blob/master/TODO.txt
 
 Attributions
 ------------
-Section TODO
+www.Unity3d.com
 
 License
 -------
