@@ -1,26 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using System;
 
 public class EnemyBehaviour : MonoBehaviour {
 	public Transform[] bullets = new Transform[0];
 	private Transform enemy;
-	public float rotationSpeed;
 
-	public float shootDelay;
+	public float ShootDelayMin;
+	public float ShootDelayMax;
+	public float timeToNextShoot;
 	// Use this for initialization
 	void Start () {
-		shootDelay = 2;
 		enemy = GetComponent<Transform>();
+		timeToNextShoot = RandomNextShoot();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (shootDelay < 0) {
+		if (timeToNextShoot < 0) {
 			AddBullet();
-			shootDelay = 3f;
-		} else shootDelay -= Time.deltaTime;
+			timeToNextShoot = RandomNextShoot();
+		} else timeToNextShoot -= Time.deltaTime;
 		
 
 	}
@@ -45,6 +45,10 @@ public class EnemyBehaviour : MonoBehaviour {
 			default: Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
 				break;
 		}
+	}
+
+	float RandomNextShoot() {
+		return Random.Range(ShootDelayMin, ShootDelayMax);
 	}
 
 	public Text text {

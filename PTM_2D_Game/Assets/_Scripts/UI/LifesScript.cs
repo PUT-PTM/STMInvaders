@@ -16,7 +16,7 @@ public class LifesScript : MonoBehaviour {
 	public void UPDATE() {
 		lifes.text = "  Lifes left";
 		for (int i = 0; i < lifesTab.Length; i++) {
-			if(i < GlobalStatics.PLAYER_LIFES) {
+			if(i < Statics.PLAYER_LIFES) {
 				lifesTab[i].SetActive(true);
 			}
 			else lifesTab[i].SetActive(false);

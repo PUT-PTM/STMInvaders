@@ -25,11 +25,18 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (dupa) {
-			Transform clone = Instantiate(enemies[0]);
+			//cloning objects
+			Transform enemy = Instantiate(enemies[0]);
 			Text textForClone = Instantiate(text);
+
+			//setting parents
 			textForClone.transform.SetParent(canvas.transform);
-			clone.GetComponent<EnemyBehaviour>().text = textForClone;
-			textForClone.GetComponent<EnemyTextBehaviour>().target = clone;
+			enemy.SetParent(GetComponent<Transform>());
+
+			//other actions
+			enemy.GetComponent<EnemyBehaviour>().text = textForClone;
+			enemy.position = GetComponent<Transform>().position;
+			textForClone.GetComponent<EnemyTextBehaviour>().target = enemy;
 
 
 			dupa = false;

@@ -4,12 +4,13 @@ using System;
 
 public class PlayerBehaviour : MonoBehaviour {
 	public float speed;
-	private Rigidbody2D rb;
-	private float moveVertical;
-	private float moveHorizontal;
-
 	public PlayerSpawner spawner;
 	public LifesScript lifes;
+
+	private Rigidbody2D rb;
+	private RespawnShield shield;
+	private float moveVertical;
+	private float moveHorizontal;
 
 	// Use this for initialization
 	void Start() {
@@ -19,20 +20,10 @@ public class PlayerBehaviour : MonoBehaviour {
 			rb = GetComponent<Rigidbody2D>();
 			lifes.UPDATE();
 		} else Debug.LogError("No reference to LIFES");
+
+		shield = GetComponentInChildren<RespawnShield>();
 	}
-	
-	/* version 4 kinematic body
-	void Update () {
-		Vector3 pos = rb.transform.position;
 
-		float x = Input.GetAxisRaw("Horizontal");
-		float y = Input.GetAxisRaw("Vertical");
-
-		Vector3 offset = new Vector3(x, y) * speed * Time.deltaTime;
-
-		rb.transform.position = new Vector3(pos.x + offset.x, pos.y + offset.y, pos.z);
-		
-	}*/
 	void Update() {
 		float x = Input.GetAxisRaw("Horizontal");
 		float y = Input.GetAxisRaw("Vertical");
@@ -45,27 +36,31 @@ public class PlayerBehaviour : MonoBehaviour {
 			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
 			moveVertical = y;
 		}
-		//rb.AddForce(new Vector2(x, y) * Time.deltaTime * speed);
 		rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
 	}
 	void OnDisable() {
-		Debug.Log("Player died");
 		if (lifes) {
-			if (GlobalStatics.PLAYER_LIFES > 0) {
-				GlobalStatics.PLAYER_IS_ALIVE = false;
-				GlobalStatics.PLAYER_LIFES--;
+			Debug.Log("Player died");
+			if (Statics.PLAYER_LIFES > 1) {
+				Statics.PLAYER_IS_ALIVE = false;
+				Statics.PLAYER_LIFES--;
 				lifes.UPDATE();
-			} else Debug.LogError("Sorry, no lifes left :P");
+			} else {
+				Statics.PLAYER_IS_ALIVE = false;
+				Statics.PLAYER_LIFES--;
+				lifes.UPDATE();
+				Debug.Log("Sorry, no lifes left :P");
+			}
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.gameObject.tag) {
-			case "PlayerBullet":;
-				break;
+			case "PlayerBullet": return;
+			case "PlayerShield": return;
 			case "EnemyBullet": {
 					Destroy(trigger.gameObject);
-					gameObject.SetActive(false);
+					if(!shield.gameObject.activeSelf) gameObject.SetActive(false);
 				}
 				break;
 			default:
