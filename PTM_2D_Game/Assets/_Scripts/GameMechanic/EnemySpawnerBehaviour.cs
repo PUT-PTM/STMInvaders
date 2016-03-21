@@ -4,7 +4,7 @@ using System.Collections;
 
 public class EnemySpawnerBehaviour : MonoBehaviour {
 	public Canvas canvas;
-	public Text text;
+	public Text textForEnemy;
 	public Level[] levels = new Level[0];
 	public Transform[] enemies = new Transform[0];
 
@@ -17,7 +17,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			gameObject.SetActive(false);
 			return;
 		}
-		if (!text) {
+		if (!textForEnemy) {
 			Debug.LogError("Not added text reference!!!");
 			gameObject.SetActive(false);
 			return;
@@ -46,7 +46,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 	public Transform CreateClone(int i, Vector3 pos) {
 		//cloning objects
 		Transform enemy = Instantiate(enemies[0]);
-		Text textForClone = Instantiate(text);
+		Text textForClone = Instantiate(textForEnemy);
 
 		//setting parents
 		textForClone.transform.SetParent(canvas.transform);
