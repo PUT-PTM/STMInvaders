@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerShooting : MonoBehaviour {
-	public Transform[] bullets = new Transform[0];
+	public AmmoStorage bullets;
 
 	private Transform player;
 	private bool spaceHolded = false;
@@ -24,7 +24,7 @@ public class PlayerShooting : MonoBehaviour {
 	}
 	// Instantiate new bullet
 	private void AddBullet() {
-		Transform bullet = Instantiate(bullets[0]);
+		Transform bullet = Instantiate(bullets[1]);
 		bullet.position = player.position;
 		bullet.GetComponent<BulletBehaviour>().SetType("PlayerBullet");
 	}

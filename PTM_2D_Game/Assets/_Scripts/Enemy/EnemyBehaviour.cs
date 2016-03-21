@@ -3,16 +3,25 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
-	public Transform[] bullets = new Transform[0];
+	public AmmoStorage bullets;
 	public Text text { get; set; }
 	public float shootDelayMin;
 	public float shootDelayMax;
 	public float timeToNextShoot;
 	public float speed;
 
-	private Transform enemy { get; set; }
+	private string id;
+	public string ID {
+		get { return ID; }
+		set {
+			id = value;
+			text.text = value;
+		}
+	}
 
-	void Start () {
+	public Transform enemy { get; set; }
+
+	void Awake () {
 		enemy = GetComponent<Transform>();
 		timeToNextShoot = RandNextShoot;
 	}
@@ -23,11 +32,12 @@ public class EnemyBehaviour : MonoBehaviour {
 			timeToNextShoot = RandNextShoot;
 		} else timeToNextShoot -= Time.deltaTime;
 
-		enemy.position += new Vector3(speed, 0f) * Time.deltaTime;
+		enemy.position += new Vector3(-speed, -speed) * Time.deltaTime;
 	}
 	// Instantiate bullet
 	private void AddBullet() {
 		if (bullets.Length > 0) {
+			// Instantiate
 			Transform bullet = Instantiate(bullets[0]);
 			bullet.position = enemy.position;
 			bullet.GetComponent<BulletBehaviour>().SetType("EnemyBullet");
@@ -36,8 +46,11 @@ public class EnemyBehaviour : MonoBehaviour {
 	// Reaction for various triggers
 	void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.gameObject.tag) {
+			case "Enemy": break;
 			case "Wall": break;
 			case "SideWall": break;
+			case "BottomWall": break;
+			case "TopWall": break;
 			case "PlayerBullet": {
 					Destroy(trigger.gameObject);
 					Destroy(gameObject);

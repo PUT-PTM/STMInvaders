@@ -17,6 +17,8 @@
 	e) BOSSES - graaarrrr :P
 4. Levels!!!
 5. Funny texts for enemies
+6. BOSSES
+	a) Maybe great idea to use Unity-joints for lasers etc :> (something like robo )
 
 ##########################Hot TODO list##########################
 GameObject for handle reference to all bullets (optimization fix - now all enemies and player store it)
