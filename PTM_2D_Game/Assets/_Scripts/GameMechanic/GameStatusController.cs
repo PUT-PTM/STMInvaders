@@ -25,7 +25,7 @@ public class GameStatusController : MonoBehaviour {
 		}
 		// Just for testing
 		if (Input.GetKeyDown(KeyCode.K)) {
-			Statics.PLAYER_LIFES -= 3;
+			Statics.PLAYER_LIFES = 1;
 			Player.gameObject.SetActive(false);
 		}
 	}
