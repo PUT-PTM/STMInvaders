@@ -107,3 +107,15 @@ int main(void)
 		TM_DISCO_LedOff(LED_ALL);
 	}
 }
+
+void init()
+{
+	USBD_Init(&USB_OTG_dev,
+	            USB_OTG_FS_CORE_ID,
+	            &USR_desc,
+	            &USBD_CDC_cb,
+	            &USR_cb);
+
+	return;
+}
+
