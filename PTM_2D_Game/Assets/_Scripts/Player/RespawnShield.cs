@@ -60,7 +60,8 @@ public class RespawnShield : MonoBehaviour {
 	// Destroying enemy bullets if enabled
 	void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.tag) {
-			case "PlayerBullet": return;
+			case "PlayerBullet": break;
+			case "Enemy": break;
 			case "EnemyBullet":
 				Destroy(trigger.gameObject);
 				break;

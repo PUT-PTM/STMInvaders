@@ -6,6 +6,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	public PlayerSpawner spawner;
 	public LifesScript lifes;
 	public float speed;
+	public bool godMode;	// indestructible mode
 
 	private Rigidbody2D rb;
 	private RespawnShield shield;
@@ -58,11 +59,13 @@ public class PlayerBehaviour : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.gameObject.tag) {
 			case "PlayerBullet": return;
-			case "PlayerShield": return;
+			case "Enemy": return;
 			case "EnemyBullet": {
-					// Destroy bullet and (if shield isn't active) - kill player
-					Destroy(trigger.gameObject);
-					if(!shield.gameObject.activeSelf) gameObject.SetActive(false);
+					if(godMode == false) {
+						// Destroy bullet and (if shield isn't active) - kill player
+						Destroy(trigger.gameObject);
+						if (!shield.gameObject.activeSelf) gameObject.SetActive(false);
+					}
 				}
 				break;
 			default:

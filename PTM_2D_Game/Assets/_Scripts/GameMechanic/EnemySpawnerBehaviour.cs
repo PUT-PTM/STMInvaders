@@ -31,7 +31,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			float posX = -110f;
 			float posY = 10f;
 			int num = 0;
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 12; j++) {
 					CreateClone(num++, new Vector3(posX, posY));
 

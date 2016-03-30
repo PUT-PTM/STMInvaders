@@ -21,6 +21,7 @@ public class EnemyMovement : MonoBehaviour {
 		if (position.x > 0) dir = false; else dir = true;
 	}
 
+	//tylko tymczasowa flaga pomocnicza, coś na zasadzie - jak jest to lataj i w którą stronę
 	private bool terefere = true;
 	void Update () {
 		if (terefere) {
