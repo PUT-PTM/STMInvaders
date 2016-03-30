@@ -1,4 +1,3 @@
-
 #define HSE_VALUE ((uint32_t)8000000) /* STM32 discovery uses a 8Mhz external crystal */
 
 #include "stm32f4xx_conf.h"
@@ -16,7 +15,7 @@
 #include "tm_stm32f4_disco.h"
 #include "defines.h"
 
-volatile uint32_t ticker, downTicker;
+volatile uint32_t ticker;//, downTicker;
 
 /*
  * The USB data must be 4 byte aligned if DMA is enabled. This macro handles
@@ -56,8 +55,20 @@ void OTG_FS_WKUP_IRQHandler(void);
 
 int main(void)
 {
-	/* Set up the system clocks */
+	/* Initialize system */
 	SystemInit();
+
+	/* Initialize button and LEDs */
+	TM_DISCO_ButtonInit();
+	TM_DISCO_LedInit();
+
+	/* Initialize delay */
+	TM_DELAY_Init();
+
+	// Initialize accelerometer
+	// 50ms delay for accelerometer calibration
+	AccInit();
+	Delay(50000);
 
 	/* Initialize USB, IO, SysTick, and all those other things you do in the morning */
 	init();
@@ -96,7 +107,7 @@ int main(void)
 				TM_DISCO_LedOff(LED_ALL);
 
 		/* Blink the orange LED at 1Hz */
-		if (500 == ticker)
+		/*if (500 == ticker)
 		{
 			GPIOD->BSRRH = GPIO_Pin_13;
 		}
@@ -104,14 +115,14 @@ int main(void)
 		{
 			ticker = 0;
 			GPIOD->BSRRL = GPIO_Pin_13;
-		}
+		}*/
 
 
 		/* If there's data on the virtual serial port:
 		 *  - Echo it back
 		 *  - Turn the green LED on for 10ms
 		 */
-		uint8_t theByte;
+		/*uint8_t theByte;
 		if (VCP_get_char(&theByte))
 		{
 			VCP_put_char(theByte);
@@ -123,7 +134,7 @@ int main(void)
 		if (0 == downTicker)
 		{
 			GPIOD->BSRRH = GPIO_Pin_12;
-		}
+		}*/
 	}
 
 	return 0;
@@ -191,14 +202,14 @@ void ColorfulRingOfDeath(void)
  * Interrupt Handlers
  */
 
-void SysTick_Handler(void)
+/*void SysTick_Handler(void)
 {
 	ticker++;
 	if (downTicker > 0)
 	{
 		downTicker--;
 	}
-}
+}*/
 
 void NMI_Handler(void)       {}
 void HardFault_Handler(void) { ColorfulRingOfDeath(); }
