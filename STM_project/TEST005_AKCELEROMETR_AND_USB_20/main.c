@@ -73,23 +73,52 @@ int main(void)
 	/* Initialize USB, IO, SysTick, and all those other things you do in the morning */
 	init();
 
-
+	uint8_t W='W';
+	uint8_t S='S';
+	uint8_t A='A';
+	uint8_t D='D';
 	unsigned int i;
+
 	while (1)
 	{
+				/*
+				if (TM_USB_HIDDEVICE_INT_Status()==0)
+				{
+					TM_DISCO_LedOn(LED_RED);
+				}/*
+
 
 		/* Updating accelerometer */
 				UpdateAccGlobals();
-
 				/* Checking X axis */
-				if(!(acc_x < 5 || acc_x > 250)){
-					if(acc_x >= 200)		TM_DISCO_LedOn(LED_GREEN);
-					else if(acc_x <= 50)	TM_DISCO_LedOn(LED_RED);
+				if(!(acc_x < 5 || acc_x > 250))
+				{
+					if(acc_x >= 200)
+					{
+						VCP_put_char(S);
+						TM_DISCO_LedOn(LED_GREEN);
+					}
+					else if(acc_x <= 50)
+						{
+						VCP_put_char(W);
+						TM_DISCO_LedOn(LED_RED);
+						}
+
 				}
 				/* Checking Y axis */
-				if(!(acc_y < 5 || acc_y > 250)){
-					if(acc_y >= 200)		TM_DISCO_LedOn(LED_BLUE);
-					else if(acc_y <= 50)	TM_DISCO_LedOn(LED_ORANGE);
+				if(!(acc_y < 5 || acc_y > 250))
+				{
+					if(acc_y >= 200)
+						{
+						VCP_put_char(D);
+						TM_DISCO_LedOn(LED_BLUE);
+						}
+					else if(acc_y <= 50)
+						{
+						VCP_put_char(A);
+						TM_DISCO_LedOn(LED_ORANGE);
+						}
+
 				}
 
 				if(TM_DISCO_ButtonPressed()){
@@ -99,6 +128,10 @@ int main(void)
 						TM_DISCO_LedOff(LED_ALL);
 						Delay(25000);
 					}
+					VCP_put_char('B');
+					VCP_put_char('U');
+					VCP_put_char('M');
+
 				}
 				else Delay(100000);
 
