@@ -1,0 +1,33 @@
+using UnityEngine;
+using System.Collections;
+
+public class EnemyMovement : MonoBehaviour {
+	public Transform[] obj = new Transform[0];
+	public int posX = -100;
+	void Start () {
+
+	}
+
+	private bool run = true;
+	private bool option = true;
+	private int keke = 100;
+	void Update () {
+		if (run) {
+			if (option) {
+				if (posX <= 100) {
+					Transform clone = Instantiate(obj[Random.value > 0.5 ? 1 : 0]);
+					clone.position = CalcY(clone);
+				} else option = false;
+			} else run = false;
+		}
+	}
+
+	private Vector3 CalcY(Transform clone) {
+		float x, y;
+
+		y = -posX * posX * 0.01f + keke;
+		x = posX++;
+
+		return new Vector3(x, y);
+	}
+}

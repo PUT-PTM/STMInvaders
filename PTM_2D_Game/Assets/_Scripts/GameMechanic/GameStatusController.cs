@@ -3,16 +3,16 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class GameStatusController : MonoBehaviour {
-	public Text GameOverText;
-	public Transform Player;
+	public Text gameOverText;
+	public Transform player;
 
 	void Start () {
-		if (!GameOverText) {
+		if (!gameOverText) {
 			Debug.LogError("GameOverText not attached!!!");
 			gameObject.SetActive(false);
 			return;
 		}
-		if (!Player) {
+		if (!player) {
 			Debug.LogError("Player transform not attached!!!");
 			gameObject.SetActive(false);
 			return;
@@ -21,12 +21,12 @@ public class GameStatusController : MonoBehaviour {
 	// Check if player lost every life
 	void LateUpdate () {
 		if(Statics.PLAYER_LIFES == 0 && !Statics.PLAYER_IS_ALIVE) {
-			GameOverText.gameObject.SetActive(true);
+			gameOverText.gameObject.SetActive(true);
 		}
 		// Just for testing
 		if (Input.GetKeyDown(KeyCode.K)) {
-			Statics.PLAYER_LIFES -= 3;
-			Player.gameObject.SetActive(false);
+			Statics.PLAYER_LIFES = 1;
+			player.gameObject.SetActive(false);
 		}
 	}
 }

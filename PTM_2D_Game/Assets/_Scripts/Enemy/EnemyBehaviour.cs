@@ -9,12 +9,10 @@ public class EnemyBehaviour : MonoBehaviour {
 	public float shootDelayMax;
 	public float timeToNextShoot;
 	public float speed;
-
-	private string id;
+	
 	public string ID {
 		get { return ID; }
 		set {
-			id = value;
 			text.text = value;
 		}
 	}
@@ -47,6 +45,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.gameObject.tag) {
 			case "Enemy": break;
+			case "Player": break;
 			case "Wall": break;
 			case "SideWall": break;
 			case "BottomWall": break;

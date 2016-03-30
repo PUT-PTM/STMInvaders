@@ -7,6 +7,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 	public Text textForEnemy;
 	public Level[] levels = new Level[0];
 	public Transform[] enemies = new Transform[0];
+	public int forceSpawnedEnemy;
 
 	// temporary flag, wanna do this better
 	private bool tempFlag = true;
@@ -30,7 +31,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			float posX = -110f;
 			float posY = 10f;
 			int num = 0;
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 12; j++) {
 					CreateClone(num++, new Vector3(posX, posY));
 
@@ -45,7 +46,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 
 	public Transform CreateClone(int i, Vector3 pos) {
 		//cloning objects
-		Transform enemy = Instantiate(enemies[0]);
+		Transform enemy = Instantiate(enemies[forceSpawnedEnemy]);
 		Text textForClone = Instantiate(textForEnemy);
 
 		//setting parents
