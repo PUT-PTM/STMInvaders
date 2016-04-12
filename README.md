@@ -33,6 +33,7 @@ https://github.com/PUT-PTM/STMInvaders/blob/master/TODO.txt
 Attributions
 ------------
 www.Unity3d.com
+https://github.com/xenovacivus/STM32DiscoveryVCP
 
 License
 -------
@@ -42,7 +43,7 @@ Credits
 -------
 
 Contributors:
-Rafał Kopczyński & Artur Jędryczkowski
+Rafał Kopczyński && Artur Jędryczkowski
 
 
 The project was conducted during the Microprocessor Lab course held by the Institute of Control and Information Engineering, Poznan University of Technology.
