@@ -41,21 +41,15 @@ public class PortChat
         Console.Write("Name: ");
         name = Console.ReadLine();
 
-        Console.WriteLine("Type QUIT to exit");
+        Console.WriteLine("Receiver Data:");
 
+       
         while (_continue)
         {
-            message = Console.ReadLine();
+            
+            if (_serialPort.BytesToRead>1)
+            Console.WriteLine((char)_serialPort.ReadByte());   
 
-            if (stringComparer.Equals("quit", message))
-            {
-                _continue = false;
-            }
-            else
-            {
-                _serialPort.WriteLine(
-                    String.Format("<{0}>: {1}", name, message));
-            }
         }
 
         readThread.Join();

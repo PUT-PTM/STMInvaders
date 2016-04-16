@@ -73,10 +73,6 @@ int main(void)
 	/* Initialize USB, IO, SysTick, and all those other things you do in the morning */
 	init();
 
-	uint8_t W='W';
-	uint8_t S='S';
-	uint8_t A='A';
-	uint8_t D='D';
 	unsigned int i;
 
 	while (1)
@@ -95,12 +91,12 @@ int main(void)
 				{
 					if(acc_x >= 200)
 					{
-						VCP_put_char(S);
+						VCP_put_char('S');
 						TM_DISCO_LedOn(LED_GREEN);
 					}
 					else if(acc_x <= 50)
 						{
-						VCP_put_char(W);
+						VCP_put_char('W');
 						TM_DISCO_LedOn(LED_RED);
 						}
 
@@ -110,12 +106,12 @@ int main(void)
 				{
 					if(acc_y >= 200)
 						{
-						VCP_put_char(D);
+						VCP_put_char('D');
 						TM_DISCO_LedOn(LED_BLUE);
 						}
 					else if(acc_y <= 50)
 						{
-						VCP_put_char(A);
+						VCP_put_char('A');
 						TM_DISCO_LedOn(LED_ORANGE);
 						}
 
@@ -129,8 +125,6 @@ int main(void)
 						Delay(25000);
 					}
 					VCP_put_char('B');
-					VCP_put_char('U');
-					VCP_put_char('M');
 
 				}
 				else Delay(100000);
