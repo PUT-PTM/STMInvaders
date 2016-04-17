@@ -14,6 +14,7 @@
 #include "tm_stm32f4_delay.h"
 #include "tm_stm32f4_disco.h"
 #include "defines.h"
+#include "stm32f4xx_tim.h"
 
 volatile uint32_t ticker;//, downTicker;
 
@@ -74,18 +75,24 @@ int main(void)
 	init();
 
 	unsigned int i;
-
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	TIM_TimeBaseStructure.TIM_Period = 40000;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_Prescaler = 500;
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter=0;
+	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+	TIM_Cmd(TIM2, ENABLE);
 	while (1)
 	{
-				/*
-				if (TM_USB_HIDDEVICE_INT_Status()==0)
-				{
-					TM_DISCO_LedOn(LED_RED);
-				}/*
+		int timerValue=TIM_GetCounter(TIM2);
+			if(timerValue==500)
+			{
 
-
-		/* Updating accelerometer */
+				/* Updating accelerometer */
 				UpdateAccGlobals();
+
 				/* Checking X axis */
 				if(!(acc_x < 5 || acc_x > 250))
 				{
@@ -132,38 +139,8 @@ int main(void)
 				//TODO Z value
 
 				TM_DISCO_LedOff(LED_ALL);
-
-		/* Blink the orange LED at 1Hz */
-		/*if (500 == ticker)
-		{
-			GPIOD->BSRRH = GPIO_Pin_13;
-		}
-		else if (1000 == ticker)
-		{
-			ticker = 0;
-			GPIOD->BSRRL = GPIO_Pin_13;
-		}*/
-
-
-		/* If there's data on the virtual serial port:
-		 *  - Echo it back
-		 *  - Turn the green LED on for 10ms
-		 */
-		/*uint8_t theByte;
-		if (VCP_get_char(&theByte))
-		{
-			VCP_put_char(theByte);
-
-
-			GPIOD->BSRRL = GPIO_Pin_12;
-			downTicker = 10;
-		}
-		if (0 == downTicker)
-		{
-			GPIOD->BSRRH = GPIO_Pin_12;
-		}*/
+			}
 	}
-
 	return 0;
 }
 
