@@ -1,4 +1,5 @@
 #include "main.h"
+#include "sound0.h"
 
 //NOTKA DLA POTOMNYCH I
 //LINIA 68 W CODEC.H: CZÊSTOTLIWOSC TAM EDYTOWA£EM
@@ -17,20 +18,19 @@ int main(void) {
 	codec_ctrl_init();
 	I2S_Cmd(CODEC_I2S, ENABLE);
 
+	int cnt = 0;
+	const int max = 10538;
+
     while(1){
     	if (SPI_I2S_GetFlagStatus(CODEC_I2S, SPI_I2S_FLAG_TXE))
     	{
+    		sample = (int16_t)(samples[cnt]*500);
     		SPI_I2S_SendData(CODEC_I2S, sample);
-    		//moja wersja
-    		if(up == true){
-    			sound+=NOTEFREQUENCY;
-    			if(sound > 1.0) up = false;
-    		} else{
-    			sound-=NOTEFREQUENCY;
-    			if(sound < -1.0) up = true;
-    		}
-    		sample = (int16_t)(NOTEAMPLITUDE*sound);
-    		sampleCounter++;
+
+    		cnt++;
+    	}
+    	if(cnt == max){
+    		cnt=0;
     	}
     	if(sampleCounter == 22000){
     		GPIO_ToggleBits(GPIOD, LED_ALL);
@@ -40,11 +40,6 @@ int main(void) {
     		sampleCounter = 0;
     	}
     }
-	/*while(1)
-	{
-		GPIO_ToggleBits(GPIOD, LED_ALL);
-		for (i=0;i<1000000;i++);
-	}*/
 }
 
 void InitGPIO_DC(){
