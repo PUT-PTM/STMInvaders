@@ -7,13 +7,21 @@
 //NOTKA DLA POTOMNYCH II
 //f0 = 0.5 * NOTEFREQUENCY * 48000 (=sample rate)
 
-int main(void) {
+unsigned int i;
+
+volatile uint32_t sampleCounter = 0;
+volatile int16_t sample = 0;
+
+float sound = 0.0;
+int up = 0;
+
+/*int main(void) {
 	SystemInit();
 
-	/* Initialize LEDs */
+	// Initialize LED's
 	InitGPIO_DC();
 
-	/* Initialize codecs */
+	// Initialize codecs
 	codec_init();
 	codec_ctrl_init();
 	I2S_Cmd(CODEC_I2S, ENABLE);
@@ -40,8 +48,54 @@ int main(void) {
     		sampleCounter = 0;
     	}
     }
-}
+}*/
+int main(void) {
+    //Fatfs object
+    FATFS FatFs;
+    //File object
+    FIL fil;
+    //Free and total space
+    uint32_t total, free;
 
+    //Initialize system
+    SystemInit();
+    //Initialize delays
+    TM_DELAY_Init();
+	//Initialize LED's
+	InitGPIO_DC();
+
+    //Mount drive
+    if (f_mount(&FatFs, "", 1) == FR_OK) {
+        //Mounted OK, turn on RED LED
+        GPIO_SetBits(GPIOD,LED_RED);
+
+        //Try to open file
+        if (f_open(&fil, "1stfile.txt", FA_OPEN_ALWAYS | FA_READ | FA_WRITE) == FR_OK) {
+            //File opened, turn off RED and turn on GREEN led
+        	GPIO_SetBits(GPIOD,LED_GREEN);
+        	GPIO_ResetBits(GPIOD,LED_RED);
+
+            //If we put more than 0 characters (everything OK)
+            if (f_puts("First string in my file\n", &fil) > 0) {
+                if (TM_FATFS_DriveSize(&total, &free) == FR_OK) {
+                    //Data for drive size are valid
+                }
+
+                //Turn on both leds
+                GPIO_SetBits(GPIOD,LED_GREEN | LED_RED);
+            }
+
+            //Close file, don't forget this!
+            f_close(&fil);
+        }
+
+        //Unmount drive, don't forget this!
+        f_mount(0, "", 1);
+    }
+    while (1) {
+
+    }
+}
 void InitGPIO_DC(){
 	// For LEDs
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
