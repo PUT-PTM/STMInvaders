@@ -47,7 +47,7 @@ public class PortChat
         while (_continue)
         {
             
-            if (_serialPort.BytesToRead>1)
+            //if (_serialPort.BytesToRead>1)
             Console.WriteLine((char)_serialPort.ReadByte());   
 
         }

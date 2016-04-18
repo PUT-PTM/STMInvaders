@@ -94,7 +94,7 @@ int main(void)
 				UpdateAccGlobals();
 
 				/* Checking X axis */
-				if(!(acc_x < 5 || acc_x > 250))
+				if(!(acc_x < 5 || acc_x > 250)) //
 				{
 					if(acc_x >= 200)
 					{
@@ -108,8 +108,14 @@ int main(void)
 						}
 
 				}
+				else
+				{
+					if(!(acc_y < 5 || acc_y > 250)){}
+					else VCP_put_char('X');
+				}
+
 				/* Checking Y axis */
-				if(!(acc_y < 5 || acc_y > 250))
+				if(!(acc_y < 5 || acc_y > 250))	//!(acc_y < 5 || acc_y > 250)
 				{
 					if(acc_y >= 200)
 						{
@@ -122,8 +128,6 @@ int main(void)
 						TM_DISCO_LedOn(LED_ORANGE);
 						}
 
-				}
-
 				if(TM_DISCO_ButtonPressed()){
 					for(i = 0; i < 4; i++){
 						TM_DISCO_LedOn(LED_ALL);
@@ -133,13 +137,21 @@ int main(void)
 					}
 					VCP_put_char('B');
 
+
 				}
+
+
+				//if(acc_x < 5 || acc_x > 250||acc_y < 5 || acc_y > 250)
+				//	VCP_put_char('N');
+
+
 				else Delay(100000);
 
 				//TODO Z value
 
 				TM_DISCO_LedOff(LED_ALL);
 			}
+
 	}
 	return 0;
 }
