@@ -64,4 +64,4 @@ sysinfo.txt
 
 # Debug files
 *.dSYM/
-!*/STMInvaders/STM_project/VCP_RECEIVER
+

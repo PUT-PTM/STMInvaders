@@ -84,6 +84,8 @@ int main(void)
 	TIM_TimeBaseStructure.TIM_RepetitionCounter=0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 	TIM_Cmd(TIM2, ENABLE);
+	int true =0;
+	char data[5]={'X','X','X','X','X'};
 	while (1)
 	{
 		int timerValue=TIM_GetCounter(TIM2);
@@ -94,39 +96,42 @@ int main(void)
 				UpdateAccGlobals();
 
 				/* Checking X axis */
-				if(!(acc_x < 5 || acc_x > 250)) //
+				if(!(acc_x < 5 || acc_x > 250))
 				{
 					if(acc_x >= 200)
-					{
-						VCP_put_char('S');
+						{
+						data[1]='S';
+						//VCP_put_char('S');
 						TM_DISCO_LedOn(LED_GREEN);
-					}
+						true=1;
+						}
 					else if(acc_x <= 50)
 						{
-						VCP_put_char('W');
+						data[0]='W';
+						//VCP_put_char('W');
 						TM_DISCO_LedOn(LED_RED);
+						true=1;
 						}
 
 				}
-				else
-				{
-					if(!(acc_y < 5 || acc_y > 250)){}
-					else VCP_put_char('X');
-				}
-
-				/* Checking Y axis */
-				if(!(acc_y < 5 || acc_y > 250))	//!(acc_y < 5 || acc_y > 250)
+				/*Checking Y axis*/
+				if(!(acc_y < 5 || acc_y > 250))
 				{
 					if(acc_y >= 200)
 						{
-						VCP_put_char('D');
+						data[3]='D';
+						//VCP_put_char('D');
 						TM_DISCO_LedOn(LED_BLUE);
+						true=1;
 						}
 					else if(acc_y <= 50)
 						{
-						VCP_put_char('A');
+						data[2]='A';
+						//VCP_put_char('A');
 						TM_DISCO_LedOn(LED_ORANGE);
+						true=1;
 						}
+				}
 
 				if(TM_DISCO_ButtonPressed()){
 					for(i = 0; i < 4; i++){
@@ -134,24 +139,32 @@ int main(void)
 						Delay(25000);
 						TM_DISCO_LedOff(LED_ALL);
 						Delay(25000);
-					}
+						}
+					data[4]='B';
 					VCP_put_char('B');
-
+					true=1;
 
 				}
 
+				if(true==0)
+				{
+					data[0]='X';
+					data[1]='X';
+					data[2]='X';
+					data[3]='X';
+					data[4]='X';
+					//VCP_put_char('X');
+					VCP_send_str(data);
 
-				//if(acc_x < 5 || acc_x > 250||acc_y < 5 || acc_y > 250)
-				//	VCP_put_char('N');
-
-
-				else Delay(100000);
-
+				}
+				else if(true==1)
+					VCP_send_str(data);
 				//TODO Z value
 
 				TM_DISCO_LedOff(LED_ALL);
 			}
 
+			true=0;
 	}
 	return 0;
 }
