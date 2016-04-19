@@ -77,94 +77,62 @@ int main(void)
 	unsigned int i;
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	TIM_TimeBaseStructure.TIM_Period = 40000;
+	TIM_TimeBaseStructure.TIM_Period = 20000;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseStructure.TIM_Prescaler = 500;
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseStructure.TIM_RepetitionCounter=0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 	TIM_Cmd(TIM2, ENABLE);
-	int true =0;
-	char data[5]={'X','X','X','X','X'};
-	while (1)
-	{
-		int timerValue=TIM_GetCounter(TIM2);
-			if(timerValue==500)
-			{
 
+	char data[5]={'_','_','_','_','_'};
+	while (1){
+		int timerValue=TIM_GetCounter(TIM2);
+			if(timerValue==500){
 				/* Updating accelerometer */
 				UpdateAccGlobals();
 
 				/* Checking X axis */
-				if(!(acc_x < 5 || acc_x > 250))
-				{
+				if(!(acc_x < 5 || acc_x > 250)){
 					if(acc_x >= 200)
 						{
+						data[0]='_';
 						data[1]='S';
-						//VCP_put_char('S');
 						TM_DISCO_LedOn(LED_GREEN);
-						true=1;
 						}
-					else if(acc_x <= 50)
-						{
+					else if(acc_x <= 50){
 						data[0]='W';
-						//VCP_put_char('W');
+						data[1]='_';
 						TM_DISCO_LedOn(LED_RED);
-						true=1;
 						}
-
 				}
 				/*Checking Y axis*/
-				if(!(acc_y < 5 || acc_y > 250))
-				{
-					if(acc_y >= 200)
-						{
+				if(!(acc_y < 5 || acc_y > 250)){
+					if(acc_y >= 200){
+						data[2]='_';
 						data[3]='D';
-						//VCP_put_char('D');
 						TM_DISCO_LedOn(LED_BLUE);
-						true=1;
 						}
-					else if(acc_y <= 50)
-						{
+					else if(acc_y <= 50){
 						data[2]='A';
-						//VCP_put_char('A');
+						data[3]='_';
 						TM_DISCO_LedOn(LED_ORANGE);
-						true=1;
 						}
 				}
 
 				if(TM_DISCO_ButtonPressed()){
-					for(i = 0; i < 4; i++){
-						TM_DISCO_LedOn(LED_ALL);
-						Delay(25000);
-						TM_DISCO_LedOff(LED_ALL);
-						Delay(25000);
-						}
 					data[4]='B';
-					VCP_put_char('B');
-					true=1;
-
+					TM_DISCO_LedOn(LED_ALL);
 				}
+				else data[4]='_';
 
-				if(true==0)
-				{
-					data[0]='X';
-					data[1]='X';
-					data[2]='X';
-					data[3]='X';
-					data[4]='X';
-					//VCP_put_char('X');
-					VCP_send_str(data);
-
+				//sending data
+				VCP_send_buffer(&data,5);
+				for(i=0; i<5; i++){
+					data[i]='_';
 				}
-				else if(true==1)
-					VCP_send_str(data);
-				//TODO Z value
-
-				TM_DISCO_LedOff(LED_ALL);
 			}
-
-			true=0;
+			TM_DISCO_LedOff(LED_ALL);
 	}
 	return 0;
 }
