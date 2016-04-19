@@ -43,13 +43,15 @@ public class PortChat
 
         Console.WriteLine("Receiver Data:");
 
-       
+        byte[] data = new byte[40];
         while (_continue)
         {
-            
-            //if (_serialPort.BytesToRead>1)
-            Console.WriteLine((char)_serialPort.ReadByte());   
 
+            //if (_serialPort.BytesToRead>1)
+            //Console.WriteLine((char)_serialPort.ReadByte());   
+            _serialPort.Read(data, 0, data.Length);
+            string dupa = Encoding.ASCII.GetString(data);
+            Console.WriteLine(dupa);
         }
 
         readThread.Join();
