@@ -1,5 +1,7 @@
 #include "main.h"
-#include "sound0.h"
+#include "sound0.h"	//shooting
+#include "sound1.h"	//explosion
+#include "sound2.h"	//dead
 
 //NOTKA DLA POTOMNYCH I
 //LINIA 68 W CODEC.H: CZÊSTOTLIWOSC TAM EDYTOWA£EM
@@ -19,17 +21,16 @@ int main(void) {
 	I2S_Cmd(CODEC_I2S, ENABLE);
 
 	int cnt = 0;
-	const int max = 10538;
 
     while(1){
     	if (SPI_I2S_GetFlagStatus(CODEC_I2S, SPI_I2S_FLAG_TXE))
     	{
-    		sample = (int16_t)(samples[cnt]*500);
+    		sample = (int16_t)(sound2[cnt]*500);
     		SPI_I2S_SendData(CODEC_I2S, sample);
 
     		cnt++;
     	}
-    	if(cnt == max){
+    	if(cnt == sound2_max){
     		cnt=0;
     	}
     	if(sampleCounter == 22000){

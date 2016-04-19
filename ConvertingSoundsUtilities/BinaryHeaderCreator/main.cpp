@@ -5,8 +5,8 @@
 using namespace std;
 
 int main() {
-	ifstream inputFile("SOUND_super_hiper.raw", ios::binary);
-	ofstream outputFile("output.h", ios::trunc | ios::binary);
+	ifstream inputFile("SOUND2.raw", ios::binary);
+	ofstream outputFile("output3.h", ios::trunc | ios::binary);
 	if (inputFile.good() && inputFile.is_open()) {
 		if (outputFile.good() && outputFile.is_open()) {
 			cout << "We're home :>" << endl;
@@ -24,7 +24,7 @@ int main() {
 	}
 	int counter = 0;
 	int8_t buffer;
-	int8_t samples[10538];
+	int8_t samples[100000];
 	while (inputFile.good() && inputFile.is_open()) {
 		stringstream ss;
 

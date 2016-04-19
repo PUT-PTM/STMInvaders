@@ -22,18 +22,5 @@ unsigned int i;
 
 void InitGPIO_DC();
 
-
-// temp
-#define NOTEAMPLITUDE 500.0
-/* Informacja dla potomnych - im ni¿sza wartosc (<1)
- * tym wiêkszy bas, w przeciwnym razie mamy pisk
- * jak skurwesen (>=1)
- */
-#define NOTEFREQUENCY 10000	//bazowo 0.015
-
 volatile uint32_t sampleCounter = 0;
 volatile int16_t sample = 0;
-
-float saw = 0.0;
-float sound = 0.0;
-int up = 0;

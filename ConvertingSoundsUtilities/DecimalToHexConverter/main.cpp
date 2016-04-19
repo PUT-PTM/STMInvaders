@@ -5,8 +5,8 @@
 using namespace std;
 
 int main() {
-	ifstream inputFile("SOUND_super_hiper.raw", ios::binary);
-	ofstream outputFile("output2.h", ios::trunc);
+	ifstream inputFile("SOUND6.raw", ios::binary);
+	ofstream outputFile("sound3.h", ios::trunc);
 	if (inputFile.good() && inputFile.is_open()) {
 		if (outputFile.good() && outputFile.is_open()) {
 			cout << "We're home :>" << endl;
