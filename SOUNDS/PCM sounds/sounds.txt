@@ -1,0 +1,8 @@
+List of sounds:
+
+SOUND1 - shooting
+SOUND2 - explosion
+SOUND3 - pick up bonus
+SOUND4 - passing to next level
+SOUND5 - dead
+SOUND6 - shield 

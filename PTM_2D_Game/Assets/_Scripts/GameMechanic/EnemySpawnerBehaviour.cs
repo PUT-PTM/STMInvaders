@@ -25,14 +25,14 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 		}
 	}
 	
-	// At this moment spawn only one enemy for tests
+	// At this moment spawn static countof enemies for tests
 	void Update () {
 		if (tempFlag) {
 			float posX = -110f;
 			float posY = 10f;
 			int num = 0;
-			for (int i = 0; i < 4; i++) {
-				for (int j = 0; j < 12; j++) {
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 5; j++) {
 					CreateClone(num++, new Vector3(posX, posY));
 
 					posX += 20f;
