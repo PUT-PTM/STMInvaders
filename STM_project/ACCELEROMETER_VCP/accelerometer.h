@@ -5,6 +5,8 @@ uint8_t acc_x = 0;
 uint8_t acc_y = 0;
 uint8_t acc_z = 0;
 
+char data[5]={'_','_','_','_','_'};
+
 #define AccReadX(void)	LIS302DL_Read(&acc_x, LIS302DL_OUT_X_ADDR, 1)
 #define AccReadY(void)	LIS302DL_Read(&acc_y, LIS302DL_OUT_Y_ADDR, 1)
 #define AccReadZ(void)	LIS302DL_Read(&acc_z, LIS302DL_OUT_Z_ADDR, 1)

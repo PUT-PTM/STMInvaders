@@ -81,58 +81,57 @@ int main(void)
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseStructure.TIM_Prescaler = 500;
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIM_TimeBaseStructure.TIM_RepetitionCounter=0;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 	TIM_Cmd(TIM2, ENABLE);
 
-	char data[5]={'_','_','_','_','_'};
 	while (1){
-		int timerValue=TIM_GetCounter(TIM2);
-			if(timerValue==500){
-				/* Updating accelerometer */
-				UpdateAccGlobals();
+		int timerValue = TIM_GetCounter(TIM2);
+		// Updating accelerometer
+		UpdateAccGlobals();
 
-				/* Checking X axis */
-				if(!(acc_x < 5 || acc_x > 250)){
-					if(acc_x >= 200)
-						{
-						data[0]='_';
-						data[1]='S';
-						TM_DISCO_LedOn(LED_GREEN);
-						}
-					else if(acc_x <= 50){
-						data[0]='W';
-						data[1]='_';
-						TM_DISCO_LedOn(LED_RED);
-						}
-				}
-				/*Checking Y axis*/
-				if(!(acc_y < 5 || acc_y > 250)){
-					if(acc_y >= 200){
-						data[2]='_';
-						data[3]='D';
-						TM_DISCO_LedOn(LED_BLUE);
-						}
-					else if(acc_y <= 50){
-						data[2]='A';
-						data[3]='_';
-						TM_DISCO_LedOn(LED_ORANGE);
-						}
-				}
-
-				if(TM_DISCO_ButtonPressed()){
-					data[4]='B';
-					TM_DISCO_LedOn(LED_ALL);
-				}
-				else data[4]='_';
-
-				//sending data
-				VCP_send_buffer(&data,5);
-				for(i=0; i<5; i++){
-					data[i]='_';
-				}
+		// Checking X axis
+		if(!(acc_x < 5 || acc_x > 250)){
+			if(acc_x >= 200){
+				data[0]='_';
+				data[1]='S';
+				TM_DISCO_LedOn(LED_GREEN);
 			}
-			TM_DISCO_LedOff(LED_ALL);
+			else if(acc_x <= 50){
+				data[0]='W';
+				data[1]='_';
+				TM_DISCO_LedOn(LED_RED);
+			}
+		}
+		// Checking Y axis
+		if(!(acc_y < 5 || acc_y > 250)){
+			if(acc_y >= 200){
+				data[2]='_';
+				data[3]='D';
+				TM_DISCO_LedOn(LED_BLUE);
+			}
+			else if(acc_y <= 50){
+				data[2]='A';
+				data[3]='_';
+				TM_DISCO_LedOn(LED_ORANGE);
+			}
+		}
+		// Checking button
+		if(TM_DISCO_ButtonPressed()){
+			data[4]='B';
+			TM_DISCO_LedOn(LED_ALL);
+		}
+		else data[4]='_';
+
+		if(timerValue==500){
+			//sending data
+			VCP_send_buffer(&data,5);
+			for(i=0; i<5; i++){
+				data[i]='_';
+			}
+			//TODO reading data
+		}
+		TM_DISCO_LedOff(LED_ALL);
 	}
 	return 0;
 }

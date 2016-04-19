@@ -7,7 +7,7 @@ using System.IO.Ports;
 using System.Threading;
 
 namespace VCP_RECEIVER {
-	public partial class PortChat {
+	public partial class VCP {
 		static char[] STM_Input = new char[5];
 		static SerialPort _serialPort;
 

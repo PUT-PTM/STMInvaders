@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace VCP_RECEIVER {
-	public partial class PortChat {
+	public partial class VCP {
 		public int GetAxisX() {
 			if (STM_Input[0] == 'A') return -1;
 			else if (STM_Input[1] == 'D') return 1;
