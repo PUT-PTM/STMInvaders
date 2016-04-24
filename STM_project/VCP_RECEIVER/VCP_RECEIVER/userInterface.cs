@@ -21,7 +21,7 @@ namespace VCP_RECEIVER {
 			else return false;
 		}
 		public void RunSound(string sound) {
-			// TODO 
+			// OLDTODO 
 			switch (sound) {
 				case "explode": break;
 				case "dead": break;

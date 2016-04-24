@@ -38,7 +38,7 @@ namespace VCP_RECEIVER {
 					}
 					Console.WriteLine(STM_Input);
 				} catch (TimeoutException) { }
-				// TODO Sending data to STM
+				// OLDTODO Sending data to STM
 			}
 		}
 		private static void InitSerialPort() {
