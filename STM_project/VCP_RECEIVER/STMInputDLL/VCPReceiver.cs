@@ -11,9 +11,15 @@ namespace STMInputDLL {
 		private char[] _input = new char[5];
 
 		public bool InitOK { get; private set; }
-		public char this[int index] {
-			get {
-				return _input[index];
+		public char this[int index] { get { return _input[index]; } }
+		public int this[string sound] {
+			set {
+				switch (sound) {
+					case "explode": // TODO explode 
+						break;
+					case "dead": // TODO dead
+						break;
+				}
 			}
 		}
 

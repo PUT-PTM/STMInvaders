@@ -15,7 +15,7 @@ namespace STMInputDLL {
 				InputOK = false;
 				return;
 			} else {
-
+				InputOK = true;
 			}
 		}
 		public int GetAxisX() {
@@ -33,10 +33,10 @@ namespace STMInputDLL {
 			else return false;
 		}
 		public void RunSound(string sound) {
-			// TODO 
+			// TODO sounds UnityGame->VCP
 			switch (sound) {
-				case "explode": break;
-				case "dead": break;
+				case "explode": STM_Input["explode"] = 1; break;
+				case "dead": STM_Input["dead"] = 1;	break;
 			}
 		}
 	}
