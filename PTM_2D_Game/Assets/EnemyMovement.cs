@@ -23,7 +23,7 @@ public class EnemyMovement : MonoBehaviour {
 
 	//tylko tymczasowa flaga pomocnicza, coś na zasadzie - jak jest to lataj i w którą stronę
 	private bool terefere = true;
-	private bool letMeFly = false;
+	// TODO private bool letMeFly = false;	
 	void Update () {
 		// 
 		if (terefere) {

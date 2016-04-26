@@ -79,14 +79,15 @@ int main(void)
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	TIM_TimeBaseStructure.TIM_Period = 20000;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Prescaler = 500;
+	TIM_TimeBaseStructure.TIM_Prescaler = 250;
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 	TIM_Cmd(TIM2, ENABLE);
 
+	int timerValue;
 	while (1){
-		int timerValue = TIM_GetCounter(TIM2);
+		timerValue = TIM_GetCounter(TIM2);
 		// Updating accelerometer
 		UpdateAccGlobals();
 
@@ -95,12 +96,12 @@ int main(void)
 			if(acc_x >= 200){
 				data[0]='_';
 				data[1]='S';
-				TM_DISCO_LedOn(LED_GREEN);
+				//TM_DISCO_LedOn(LED_GREEN);
 			}
 			else if(acc_x <= 50){
 				data[0]='W';
 				data[1]='_';
-				TM_DISCO_LedOn(LED_RED);
+				//TM_DISCO_LedOn(LED_RED);
 			}
 		}
 		// Checking Y axis
@@ -108,24 +109,24 @@ int main(void)
 			if(acc_y >= 200){
 				data[2]='_';
 				data[3]='D';
-				TM_DISCO_LedOn(LED_BLUE);
+				//TM_DISCO_LedOn(LED_BLUE);
 			}
 			else if(acc_y <= 50){
 				data[2]='A';
 				data[3]='_';
-				TM_DISCO_LedOn(LED_ORANGE);
+				//TM_DISCO_LedOn(LED_ORANGE);
 			}
 		}
 		// Checking button
 		if(TM_DISCO_ButtonPressed()){
 			data[4]='B';
-			TM_DISCO_LedOn(LED_ALL);
+			//TM_DISCO_LedOn(LED_ALL);
 		}
 		else data[4]='_';
 
-		if(timerValue==500){
+		if(timerValue==250){
 			//sending data
-			VCP_send_buffer(&data,5);
+			VCP_send_buffer(&data,6);
 			for(i=0; i<5; i++){
 				data[i]='_';
 			}
@@ -151,14 +152,11 @@ void init()
 	LED_Config.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOD, &LED_Config);
 
-
-
 	/* Setup SysTick or CROD! */
 	if (SysTick_Config(SystemCoreClock / 1000))
 	{
 		ColorfulRingOfDeath();
 	}
-
 
 	/* Setup USB */
 	USBD_Init(&USB_OTG_dev,
@@ -166,7 +164,6 @@ void init()
 	            &USR_desc,
 	            &USBD_CDC_cb,
 	            &USR_cb);
-
 	return;
 }
 
