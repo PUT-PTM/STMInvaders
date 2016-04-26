@@ -5,7 +5,7 @@ namespace STMInputDLL {
 	public partial class STMInput {
 		private SerialPort _serialPort;
 		public char[] _input = { '_', '_', '_', '_', '_' };
-		private char[] _output = { '_', '_' };
+		public char[] _output = { '_', '\n' };
 		private bool initOK;
 		
 		public void ClosePort() {
@@ -23,18 +23,6 @@ namespace STMInputDLL {
 		/// <param name="index"> _input table index </param>
 		/// <returns></returns>
 		private char this[int index] { get { return _input[index]; } }
-		/// <summary>
-		/// Special indexer to encapsulate acces to _output table (sounds)
-		/// </summary>
-		/// <param name="sound"> string representing sound (explode or dead) </param>
-		private char this[string sound] {
-			set {
-				switch (sound) {
-					case "explode": _output[0] = value; break;
-					case "dead": _output[1] = value; break;
-				}
-			}
-		}
 		/// <summary>
 		/// Additional operator for simplier check if VCP work fine outside the class
 		/// Now it's possible check status "as-is" in if-statement [if(VCP) { ... }]
@@ -90,9 +78,8 @@ namespace STMInputDLL {
 						}
 						_serialPort.ReadChar();
 						// TODO Sending data to STM
-						//_serialPort.WriteLine(_input.ToString());
-						//if (_input[0] == '1') _input[0] = '_';
-						//if (_input[1] == '1') _input[1] = '_';
+						_serialPort.Write(_output, 0, 1);
+						_output[0] = '_';
 					} catch (TimeoutException) { }
 				}
 			}

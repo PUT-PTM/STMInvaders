@@ -69,6 +69,7 @@
     <Compile Include="Assets\CAŁKOWANIE\CAŁKOMATOR.cs" />
     <Compile Include="Assets\EnemyMovement.cs" />
     <Compile Include="Assets\InGameMenu.cs" />
+    <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\_Scripts\Bullets\BulletBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyTextBehaviour.cs" />
