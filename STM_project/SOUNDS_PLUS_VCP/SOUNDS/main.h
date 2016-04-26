@@ -35,14 +35,14 @@ unsigned int VOLUME = 500;
 	tab - reference to sound table
 */
 typedef struct{
-	uint32_t cnt = 0;
+	uint32_t cnt;
 	uint16_t max;
 	uint16_t* tab;
 } Sound;
-Sound strSound0 = { 0, sound0_max, &sound0};
-Sound strSound1 = { 0, sound1_max, &sound1};
-Sound strSound2 = { 0, sound2_max, &sound2};
+Sound strSound0;
+Sound strSound1;
+Sound strSound2;
 
-Sound* actualSound = NULL;
+Sound* actualSound;
 
 #endif

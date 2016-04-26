@@ -90,7 +90,7 @@ int main(void)
 	TIM_Cmd(TIM2, ENABLE);
 
 	int timerValue;
-	ChangeSound(0);
+	char buffer[10];
 	while (1){
 		timerValue = TIM_GetCounter(TIM2);
 		// Updating accelerometer
@@ -128,23 +128,31 @@ int main(void)
 		// Checking button
 		if(TM_DISCO_ButtonPressed()){
 			data[4]='B';
+			//ChangeSound('0');
 			//TM_DISCO_LedOn(LED_ALL);
 		}
-		else data[4]='_';
+		if(TM_DISCO_ButtonOnReleased()){
+			data[4]='_';
+		}
 
-		/*if(timerValue==250){
+		if(timerValue==250){
 			//sending data
 			VCP_send_buffer(&data,6);
 			for(i=0; i<5; i++){
 				data[i]='_';
 			}
-			//TODO reading data
-		}*/
+			//reading data
+			VCP_get_char(buffer);
+			sound = buffer[0];
+			if(sound != lastSound){
+				lastSound = sound;
+				ChangeSound(sound);
+			}
+		}
 		//TM_DISCO_LedOff(LED_ALL);
 	}
 	return 0;
 }
-
 
 void init(){
 	// STM32F4 discovery LEDs

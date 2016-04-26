@@ -32,8 +32,9 @@
 		/// <param name="sound">explode or dead string</param>
 		public void RunSound(string sound) {
 			switch (sound) {
-				case "explode": this["explode"] = '1'; break;
-				case "dead": this["dead"] = '1'; break;
+				case "shoot": _output[0] = '0'; break;
+				case "explode": _output[0] = '1'; break;
+				case "dead": _output[0] = '2'; break;
 			}
 		}
 	}

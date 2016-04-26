@@ -35,15 +35,6 @@ public class PlayerBehaviourVCP : MonoBehaviour {
 		x = STM_Input.GetAxisX();
 		y = STM_Input.GetAxisY();
 
-		//x = Input.GetAxisRaw("Horizontal");
-		//y = Input.GetAxisRaw("Vertical");
-		string dupa = "";
-		for (int i = 0; i < 5; i++) {
-			dupa += STM_Input._input[i];
-		}
-		//Debug.Log(dupa + " " + VCP.IsAlive);
-		Debug.Log(x.ToString() + " " + y.ToString() + " " + dupa);
-
 		if (x != 0 && x != moveHorizontal) {
 			rb.velocity = new Vector2(rb.velocity.x * 0.1f, rb.velocity.y);
 			moveHorizontal = x;
