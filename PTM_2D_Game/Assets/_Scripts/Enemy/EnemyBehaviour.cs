@@ -32,19 +32,17 @@ public class EnemyBehaviour : MonoBehaviour {
 
 		enemy.position += new Vector3(-speed, -speed) * Time.deltaTime;
 	}
-	bool dupa = true;
 	// Instantiate bullet
 	private void AddBullet() {
-		if (bullets.Length > 0) {
-			// Instantiate
-			if (dupa) {
+		if (GetComponent<EnemyMovement>().LetMeFly) {
+			if (bullets.Length > 0) {
+				// Instantiate
 				Transform bullet = Instantiate(bullets[0]);
 				bullet.position = enemy.position;
 				bullet.GetComponent<BulletBehaviour>().SetType("EnemyBullet");
 				bullet.SetParent(this.transform);
-				dupa = false;
-			}
-		} else Debug.LogError("Bullets not added to array!!!");
+			} else Debug.LogError("Bullets not added to array!!!");
+		}
 	}
 	// Reaction for various triggers
 	void OnTriggerEnter2D(Collider2D trigger) {
@@ -58,7 +56,7 @@ public class EnemyBehaviour : MonoBehaviour {
 			case "PlayerBullet": {
 					Destroy(trigger.gameObject);
 					transform.DetachChildren();
-					Destroy(gameObject);
+					GetComponentInParent<EnemySpawnerBehaviour>().KillMe(this.transform);
 					break;
 				}
 			case "EnemyBullet": break;

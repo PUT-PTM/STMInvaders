@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemySpawnerBehaviour : MonoBehaviour {
 	public Canvas canvas;
@@ -11,6 +12,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 
 	// temporary flag, wanna do this better
 	private bool tempFlag = true;
+	public List<Transform> listOfShips;
 
 	void Start () {
 		if (!canvas) {
@@ -23,18 +25,21 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			gameObject.SetActive(false);
 			return;
 		}
+		listOfShips = new List<Transform>();
 	}
-	
+	private float flyDelay = 0;
+	public float flyDelayMin;
+	public float flyDelayMax;
 	// At this moment spawn static countof enemies for tests
 	void Update () {
 		if (tempFlag) {
 			float posX = -110f;
-			float posY = 10f;
+			float posY = 20f;
 			int num = 0;
-			for (int i = 0; i < 2; i++) {
-				for (int j = 0; j < 5; j++) {
-					CreateClone(num++, new Vector3(posX, posY));
-
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j < 10; j++) {
+					listOfShips.Add(CreateClone(num++, new Vector3(posX, posY)));
+					if (j == 4) posX += 40f;
 					posX += 20f;
 				}
 				posX = -110f;
@@ -42,6 +47,25 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			}
 			tempFlag = false;
 		}
+		if(flyDelay < 0) {
+			StartRandomShipFlying();
+			flyDelay = Random.Range(flyDelayMin, flyDelayMax);
+		} else {
+			flyDelay -= Time.deltaTime;
+		}
+	}
+
+	private void StartRandomShipFlying() {
+		if (listOfShips.Count > 0) {
+			int index = Random.Range(0, listOfShips.Count - 1);
+			listOfShips[index].GetComponent<EnemyMovement>().FlyNow();
+			if (Random.Range(0, 10) < 3) StartRandomShipFlying();
+		}
+	}
+
+	public void KillMe(Transform shipToKill) {
+		listOfShips.Remove(shipToKill);
+		Destroy(shipToKill.gameObject);
 	}
 
 	public Transform CreateClone(int i, Vector3 pos) {
@@ -55,14 +79,13 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 
 		//other actions
 		enemy.GetComponent<EnemyBehaviour>().text = textForClone;
-		enemy.position = GetComponent<Transform>().position;
 		textForClone.GetComponent<EnemyTextBehaviour>().target = enemy;
 
-		//set something...
-		enemy.GetComponent<EnemyBehaviour>().ID = "dupa" + i;
-		enemy.GetComponent<EnemyBehaviour>().enemy.position = pos;
-		enemy.GetComponent<EnemyBehaviour>().text.text = "dupa" + i;
-		enemy.name = "dupa" + i;
+		//set others
+		enemy.position = pos;
+		enemy.gameObject.SetActive(true);
+		enemy.GetComponent<EnemyBehaviour>().text.text = i.ToString();
+		enemy.name = "Enemy" + i;
 
 		return enemy;
 	}

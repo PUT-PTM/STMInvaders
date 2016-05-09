@@ -99,27 +99,27 @@ int main(void)
 		// Update sounds
 		CheckSounds();
 
-		// Checking X axis
-		if(!(acc_x < 5 || acc_x > 250)){
-			if(acc_x >= 200){
+		// Checking X axis (vertical move)
+		if(!(acc_x < 5 || acc_x > 245)){
+			if(acc_x >= 190){
 				data[0]='_';
 				data[1]='S';
 				//TM_DISCO_LedOn(LED_GREEN);
 			}
-			else if(acc_x <= 50){
+			else if(acc_x <= 60){
 				data[0]='W';
 				data[1]='_';
 				//TM_DISCO_LedOn(LED_RED);
 			}
 		}
-		// Checking Y axis
-		if(!(acc_y < 5 || acc_y > 250)){
-			if(acc_y >= 200){
+		// Checking Y axis (horizontal move)
+		if(!(acc_y < 5 || acc_y > 245)){
+			if(acc_y >= 190){
 				data[2]='_';
 				data[3]='D';
 				//TM_DISCO_LedOn(LED_BLUE);
 			}
-			else if(acc_y <= 50){
+			else if(acc_y <= 60){
 				data[2]='A';
 				data[3]='_';
 				//TM_DISCO_LedOn(LED_ORANGE);
@@ -135,7 +135,7 @@ int main(void)
 			data[4]='_';
 		}
 
-		if(timerValue==250){
+		/*if(timerValue==250){
 			//sending data
 			VCP_send_buffer(&data,6);
 			for(i=0; i<5; i++){
@@ -148,8 +148,7 @@ int main(void)
 				lastSound = sound;
 				ChangeSound(sound);
 			}
-		}
-		//TM_DISCO_LedOff(LED_ALL);
+		}*/
 	}
 	return 0;
 }

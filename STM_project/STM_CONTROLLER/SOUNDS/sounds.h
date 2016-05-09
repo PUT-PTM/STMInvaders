@@ -24,7 +24,7 @@ void InitSounds(){
 	strSound2.max = sound2_max;
 	strSound2.tab =	&sound2;
 
-	Sound* actualSound = NULL;
+	Sound* actualSound = &strSound0;
 }
 void CheckSounds(){
 	if(actualSound != NULL){
@@ -35,7 +35,7 @@ void CheckSounds(){
 		}
 		if(actualSound->cnt == actualSound->max){
 			actualSound->cnt=0;
-			actualSound = NULL;
+			//actualSound = NULL;
 		}
 	}
 }

@@ -6,7 +6,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	public PlayerSpawner spawner;
 	public LifesScript lifes;
 	public float speed;
-	public bool godMode;	// indestructible mode
+	public bool godMode;    // indestructible mode
 
 	private Rigidbody2D rb;
 	private RespawnShield shield;
@@ -24,15 +24,16 @@ public class PlayerBehaviour : MonoBehaviour {
 		} else Debug.LogError("No reference to LIFES");
 	}
 	// Checking axis and moving player
+	private	float x, y;
 	void Update() {
-		float x = Input.GetAxisRaw("Horizontal");
-		float y = Input.GetAxisRaw("Vertical");
+		x = Input.GetAxisRaw("Horizontal");
+		y = Input.GetAxisRaw("Vertical");
 
-		if(x != 0 && x != moveHorizontal) {
+		if (x != 0 && x != moveHorizontal) {
 			rb.velocity = new Vector2(rb.velocity.x * 0.1f, rb.velocity.y);
 			moveHorizontal = x;
 		}
-		if(y != 0 && y != moveVertical) {
+		if (y != 0 && y != moveVertical) {
 			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.1f);
 			moveVertical = y;
 		}

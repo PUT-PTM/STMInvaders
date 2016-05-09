@@ -5,6 +5,7 @@ using System.Collections;
 public class GameStatusController : MonoBehaviour {
 	public Text gameOverText;
 	public Transform player;
+	public EnemySpawnerBehaviour spawner;
 
 	void Start () {
 		if (!gameOverText) {
@@ -14,6 +15,11 @@ public class GameStatusController : MonoBehaviour {
 		}
 		if (!player) {
 			Debug.LogError("Player transform not attached!!!");
+			gameObject.SetActive(false);
+			return;
+		}
+		if (!spawner) {
+			Debug.LogError("Enemy spawner transform not attached!!!");
 			gameObject.SetActive(false);
 			return;
 		}

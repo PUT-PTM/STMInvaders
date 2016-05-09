@@ -3,8 +3,8 @@ using System.Collections;
 
 public class EnemyMovement : MonoBehaviour {
 	public Transform[] obj = new Transform[0];
-	public int moveStart;	//szerokość pomiedzy miejscami zerowymi funkcji
-	public int moveEnd;		//w zasadzie ile punktów ma przelecieć statek
+	public int moveStart;	//width between zeroes of function
+	public int moveEnd;		//basically points in space to move ship
 
 	private Transform tr;
 	private Transform temp;
@@ -13,27 +13,35 @@ public class EnemyMovement : MonoBehaviour {
 	public bool dir;
 	void Start() {
 		temp = tr = GetComponent<Transform>();
-		position = temp.position;   //punkt odniesienia dla funkcji
-		posX = -moveStart / 2;      //pozycja X względem punktu początkowego
-		pos = 0;                    //pozycja Y względem punktu startowego 
+		position = temp.position;   //point of reference for function
+		posX = -moveStart / 2;      //position X counting from start position
+		pos = 0;                    //position Y counting from start position
 		moveEnd = Random.Range(30, 100);
-		//właściwie tylko po to aby mi w ścianę się statek nie wpieprzył :P
+		//its just for help, with this flag enemy ships not hit in the walls
 		if (position.x > 0) dir = false; else dir = true;
 	}
 
-	//tylko tymczasowa flaga pomocnicza, coś na zasadzie - jak jest to lataj i w którą stronę
-	private bool terefere = true;
-	// TODO private bool letMeFly = false;	
+	//tylko tymczasowe flagi pomocniczE, coś na zasadzie - jak jest true to lataj i w którą stronę
+	//TODO przerobić na delegaty
+	private bool flyDir = true;		//ta określa kierunek
+	private bool letMeFly = false;	//ta pozwala lecieć
+	public bool LetMeFly { get { return letMeFly; } }
+	//changing flag
+	public void FlyNow() {
+		letMeFly = true;
+	}
 	void Update () {
-		// 
-		if (terefere) {
+		if (flyDir && letMeFly) {
 			if (posX < moveEnd) {
 				tr.position = position + CalcPos();
-			} else terefere = false;
-		} else {
+			} else flyDir = false;
+		} else if (letMeFly) {
 			if (posX > (-moveStart / 2)) {
 				tr.position = position + CalcPos(false);
-			} else terefere = true;
+			} else {
+				flyDir = true;
+				letMeFly = false;
+			}
 		}
 	}
 

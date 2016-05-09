@@ -10,10 +10,11 @@ namespace STMInputDLLTester {
 		static void Main(string[] args) {
 			STMInput STM_Input = new STMInput();
 			new Thread(STM_Input.Run).Start();
+			int i = 0;
 
 			while (true) {
-				Thread.Sleep(1000);
-				Console.WriteLine(STM_Input._input);
+				//Thread.Sleep(100);
+				Console.WriteLine(STM_Input.Input + " " + i++);
 			}
 		}
 	}
