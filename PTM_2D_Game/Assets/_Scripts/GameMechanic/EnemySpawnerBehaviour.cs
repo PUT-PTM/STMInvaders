@@ -2,10 +2,12 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class EnemySpawnerBehaviour : MonoBehaviour {
 	public Canvas canvas;
 	public Text textForEnemy;
+	public Text gameStatText;
 	public Level[] levels = new Level[0];
 	public Transform[] enemies = new Transform[0];
 	public int forceSpawnedEnemy;
@@ -49,17 +51,28 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 		}
 		if(flyDelay < 0) {
 			StartRandomShipFlying();
-			flyDelay = Random.Range(flyDelayMin, flyDelayMax);
+			flyDelay = UnityEngine.Random.Range(flyDelayMin, flyDelayMax);
 		} else {
 			flyDelay -= Time.deltaTime;
 		}
+		if (!(listOfShips.Count > 0)) {
+			gameStatText.text = "Woah - U won!!!";
+			gameStatText.gameObject.SetActive(true);
+		}
+	}
+
+	public void ClearList() {
+		for(int i = 0; i < listOfShips.Count; i++) {
+			Destroy(listOfShips[i].GetComponent<Transform>().gameObject);
+		}
+		listOfShips.Clear();
 	}
 
 	private void StartRandomShipFlying() {
 		if (listOfShips.Count > 0) {
-			int index = Random.Range(0, listOfShips.Count - 1);
+			int index = UnityEngine.Random.Range(0, listOfShips.Count - 1);
 			listOfShips[index].GetComponent<EnemyMovement>().FlyNow();
-			if (Random.Range(0, 10) < 3) StartRandomShipFlying();
+			if (UnityEngine.Random.Range(0, 10) < 3) StartRandomShipFlying();
 		}
 	}
 

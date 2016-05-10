@@ -38,5 +38,9 @@ public class GameStatusController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			Application.Quit();
 		}
+		// CZITYYYY
+		if (Input.GetKeyDown(KeyCode.L)) {
+			spawner.ClearList();
+		}
 	}
 }
