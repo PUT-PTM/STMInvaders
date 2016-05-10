@@ -83,7 +83,7 @@ int main(void)
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	TIM_TimeBaseStructure.TIM_Period = 20000;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Prescaler = 250;
+	TIM_TimeBaseStructure.TIM_Prescaler = 50;
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
@@ -135,7 +135,7 @@ int main(void)
 			data[4]='_';
 		}
 
-		/*if(timerValue==250){
+		if(timerValue==50){
 			//sending data
 			VCP_send_buffer(&data,6);
 			for(i=0; i<5; i++){
@@ -144,11 +144,11 @@ int main(void)
 			//reading data
 			VCP_get_char(buffer);
 			sound = buffer[0];
-			if(sound != lastSound){
-				lastSound = sound;
+			//if(sound != lastSound){
+			//	lastSound = sound;
 				ChangeSound(sound);
-			}
-		}*/
+			//}
+		}
 	}
 	return 0;
 }

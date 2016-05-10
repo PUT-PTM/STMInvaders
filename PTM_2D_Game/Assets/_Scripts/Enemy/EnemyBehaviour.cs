@@ -34,13 +34,13 @@ public class EnemyBehaviour : MonoBehaviour {
 	}
 	// Instantiate bullet
 	private void AddBullet() {
-		if (GetComponent<EnemyMovement>().LetMeFly) {
+		if (GetComponent<EnemyMovement>().CanShoot) {
 			if (bullets.Length > 0) {
 				// Instantiate
 				Transform bullet = Instantiate(bullets[0]);
 				bullet.position = enemy.position;
 				bullet.GetComponent<BulletBehaviour>().SetType("EnemyBullet");
-				bullet.SetParent(this.transform);
+				//bullet.SetParent(this.transform);
 			} else Debug.LogError("Bullets not added to array!!!");
 		}
 	}

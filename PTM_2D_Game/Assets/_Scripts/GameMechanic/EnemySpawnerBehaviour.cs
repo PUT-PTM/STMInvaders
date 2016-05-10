@@ -84,7 +84,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 		//set others
 		enemy.position = pos;
 		enemy.gameObject.SetActive(true);
-		enemy.GetComponent<EnemyBehaviour>().text.text = i.ToString();
+		enemy.GetComponent<EnemyBehaviour>().text.text = "";
 		enemy.name = "Enemy" + i;
 
 		return enemy;

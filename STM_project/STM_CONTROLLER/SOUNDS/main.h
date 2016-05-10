@@ -25,7 +25,7 @@
 
 unsigned int i;
 unsigned int sample;
-unsigned int VOLUME = 500;
+unsigned int VOLUME = 500;	//500 default
 
 //void InitGPIO_DC();
 

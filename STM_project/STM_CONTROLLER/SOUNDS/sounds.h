@@ -12,7 +12,7 @@ void InitSounds(){
 	I2S_Cmd(CODEC_I2S, ENABLE);
 
 
-	strSound0.cnt =  0;
+	strSound0.cnt = 0;
 	strSound0.max = sound0_max;
 	strSound0.tab = &sound0;
 
@@ -24,29 +24,32 @@ void InitSounds(){
 	strSound2.max = sound2_max;
 	strSound2.tab =	&sound2;
 
-	Sound* actualSound = &strSound0;
+	actualSound = &strSound2;
 }
 void CheckSounds(){
 	if(actualSound != NULL){
 		if (SPI_I2S_GetFlagStatus(CODEC_I2S, SPI_I2S_FLAG_TXE)){
-			sample = (int16_t)(actualSound->tab[actualSound->cnt]*VOLUME);
-			SPI_I2S_SendData(CODEC_I2S, sample);			
+			//przypisanie próbce aktualnej wartoci z tablicy
+			sample = (actualSound->tab[actualSound->cnt] * VOLUME);
+			//rzucenie tego do SPI
+			SPI_I2S_SendData(CODEC_I2S, sample);
+			//zmiana licznika
 			actualSound->cnt++;
 		}
 		if(actualSound->cnt == actualSound->max){
 			actualSound->cnt=0;
-			//actualSound = NULL;
+			actualSound = NULL;
 		}
 	}
 }
 void ChangeSound(char x){
-	if(actualSound != NULL) actualSound->cnt = 0;
-	//if(actualSound != NULL) return;
+	//if(actualSound != NULL) actualSound->cnt = 0;	//wersja: pojawi sie nowy dŸwiêk to zeruj poprzedni
+	if(actualSound != NULL) return;					//wersja: odpalaj dŸwiêk póki siê nei skoñczy
 	switch(x){
 		case '0': actualSound = &strSound0; break;	//shooting
 		case '1': actualSound = &strSound1; break;	//explosion
 		case '2': actualSound = &strSound2; break;	//dead
-		case '_': break;	//no new sound from game
+		case '_': break;				//no new sound from game
 	}
 }
 /*

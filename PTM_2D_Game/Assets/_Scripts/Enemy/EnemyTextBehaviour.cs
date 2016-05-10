@@ -24,8 +24,15 @@ public class EnemyTextBehaviour : MonoBehaviour {
 			pos.position = new Vector3(target.position.x, target.position.y + 10);
 			// SetText(pos.position.ToString());	- just 4 tests
 		} else {
-			text.text = "You killed me!!!";
-			ImDead = true;
+			if(ImDead == false) {
+				Random.seed = (Time.frameCount);
+				int random = Random.Range(0, 40);
+				if (random < 10 && random > 6) text.text = "You killed me!!!";
+				else if (random < 20 && random > 16) text.text = "I see light :o";
+				else if (random < 30 && random > 26) text.text = "Shit, noooope!!!";
+				else if (random < 40 && random > 36) text.text = "Mommy ;___;";
+				ImDead = true;
+			}
 		}
 		// Shows text
 		if (ImDead) {

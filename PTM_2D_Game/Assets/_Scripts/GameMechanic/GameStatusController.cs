@@ -34,5 +34,9 @@ public class GameStatusController : MonoBehaviour {
 			Statics.PLAYER_LIFES = 1;
 			player.gameObject.SetActive(false);
 		}
+		// Check for escape
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Application.Quit();
+		}
 	}
 }

@@ -21,6 +21,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
 			rb = GetComponent<Rigidbody2D>();
 			shield = GetComponentInChildren<RespawnShield>();
+			Debug.Log("Shield parent is: " + shield.transform.parent);
 		} else Debug.LogError("No reference to LIFES");
 	}
 	// Checking axis and moving player
@@ -65,7 +66,9 @@ public class PlayerBehaviour : MonoBehaviour {
 					if(godMode == false) {
 						// Destroy bullet and (if shield isn't active) - kill player
 						Destroy(trigger.gameObject);
-						if (!shield.gameObject.activeSelf) gameObject.SetActive(false);
+						if (!shield.gameObject.activeSelf) {
+							this.gameObject.SetActive(false);
+						}
 					}
 				}
 				break;

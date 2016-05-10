@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO.Ports;
 
-namespace STMInputDLL{
-	public partial class STMInput: IDisposable {
+namespace STMInputDLL {
+	public partial class STMInput : IDisposable {
 		#region Class Variables
 		private SerialPort _serialPort;
 		private char[] _input = { '_', '_', '_', '_', '_' };
@@ -59,7 +59,7 @@ namespace STMInputDLL{
 			// Set the read/write timeouts
 			_serialPort.ReadTimeout = 500;
 			_serialPort.WriteTimeout = 500;
-			
+
 			//everything is ok
 			return true;
 		}
@@ -84,8 +84,10 @@ namespace STMInputDLL{
 				for (int i = 0; i < _input.Length; i++) {
 					_input[i] = (char)_serialPort.ReadChar();
 				}
-				_serialPort.ReadChar();	// Read end-char
-										// Sending data to STM
+				_serialPort.ReadChar(); // Read end-char										
+			} catch (TimeoutException) { }
+			try {
+				// Sending data to STM
 				_serialPort.Write(_output, 0, 1);
 				_output[0] = '_';
 			} catch (TimeoutException) { }
@@ -93,7 +95,7 @@ namespace STMInputDLL{
 		#endregion
 		#region IDisposable Support
 		private bool disposed = false; // To detect redundant calls
-		// Overriden Dispose method
+									   // Overriden Dispose method
 		protected virtual void Dispose(bool disposing) {
 			if (!disposed) {
 				if (disposing) {

@@ -23,10 +23,7 @@
 		/// </summary>
 		/// <returns> 1 when pressed, 0 when not pressed </returns>
 		public bool GetButton() {
-			if (this[4] == 'B') {
-				RunSound("dead");
-				return true;
-			}
+			if (this[4] == 'B') return true;
 			else return false;
 		}
 		/// <summary>

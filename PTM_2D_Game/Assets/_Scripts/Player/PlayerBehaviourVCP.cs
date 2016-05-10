@@ -16,10 +16,12 @@ public class PlayerBehaviourVCP : MonoBehaviour {
 	private float moveVertical;
 	private float moveHorizontal;
 
-	private STMInput vcp;
+	public STMInput vcp;
 	private Thread vcpThread;
+
 	#endregion
-	void Start() {
+	#region Start & Update
+	void Awake() {
 		if (lifes) {
 			moveHorizontal = 0f;
 			moveVertical = 0f;
@@ -30,14 +32,14 @@ public class PlayerBehaviourVCP : MonoBehaviour {
 		} else Debug.LogError("No reference to LIFES");
 		if ((vcp = new STMInput())) {
 			vcpThread = new Thread(vcp.Run);
+			vcpThread.Priority = System.Threading.ThreadPriority.AboveNormal;
 			vcpThread.Start();
-		} else Debug.LogError("STM not connected or there is some error");
+		} else Debug.LogError("Something wrong with VCP My Fabulous masterrrr...");
 	}
 	// Checking axis and moving player
 	private	float x, y;
 	void Update() {
 		if (vcp) {
-			Debug.Log(vcp.Input);
 			x = vcp.GetAxisX();
 			y = vcp.GetAxisY();
 		} else {
@@ -55,7 +57,8 @@ public class PlayerBehaviourVCP : MonoBehaviour {
 		}
 		rb.velocity = new Vector2(x, y) * Time.deltaTime * speed;
 	}
-	#region Unity ON-sth functions
+	#endregion
+	#region Unity OnDisable, OnTriggerEnter, OnDestroy
 	// Called when player dying, check lifes left and decide
 	// if player could still play or you get deadly message :>
 	void OnDisable() {
@@ -65,11 +68,14 @@ public class PlayerBehaviourVCP : MonoBehaviour {
 				Statics.PLAYER_IS_ALIVE = false;
 				Statics.PLAYER_LIFES--;
 				lifes.UPDATE();
+				vcp.RunSound("explode");
+				GetComponent<PlayerShootingVCP>().ClearOnDeath();
 			} else {
 				Statics.PLAYER_IS_ALIVE = false;
 				Statics.PLAYER_LIFES--;
 				lifes.UPDATE();
 				Debug.Log("Sorry, no lifes left :P");
+				vcp.RunSound("dead");
 			}
 		}
 	}
@@ -94,7 +100,6 @@ public class PlayerBehaviourVCP : MonoBehaviour {
 	}
 	void OnDestroy() {
 		Debug.Log("Close VCP port");
-		vcpThread.Abort();
 		vcp.Dispose();
 	}
 	#endregion
