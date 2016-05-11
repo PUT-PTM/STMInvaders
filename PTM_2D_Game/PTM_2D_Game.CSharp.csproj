@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Assets\CAŁKOWANIE\CAŁKOMATOR.cs" />
     <Compile Include="Assets\InGameMenu.cs" />
+    <Compile Include="Assets\StarsBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Bullets\BulletBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyMovement.cs" />
