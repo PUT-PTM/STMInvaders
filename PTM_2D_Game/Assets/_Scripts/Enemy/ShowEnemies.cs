@@ -14,9 +14,9 @@ public class ShowEnemies : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-		int dupa = enemySpawner.GetComponentsInChildren<EnemyBehaviour>().Length;
-		if (text.text != (" Enemies:\n " + dupa)) {
-			text.text = " Enemies:\n " + dupa;
+		int counter = enemySpawner.GetComponentsInChildren<EnemyBehaviour>().Length;
+		if (text.text != (" Enemies:\n " + counter)) {
+			text.text = " Enemies:\n " + counter;
 		}
 	}
 }

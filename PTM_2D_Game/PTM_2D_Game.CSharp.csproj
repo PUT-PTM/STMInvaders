@@ -72,24 +72,20 @@
     <Compile Include="Assets\_Scripts\Bullets\BulletBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyMovement.cs" />
+    <Compile Include="Assets\_Scripts\Enemy\EnemySpawnerBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyTextBehaviour.cs" />
+    <Compile Include="Assets\_Scripts\Enemy\ShowEnemies.cs" />
     <Compile Include="Assets\_Scripts\GameMechanic\AmmoStorage.cs" />
-    <Compile Include="Assets\_Scripts\GameMechanic\EnemySpawnerBehaviour.cs" />
     <Compile Include="Assets\_Scripts\GameMechanic\GameStatusController.cs" />
     <Compile Include="Assets\_Scripts\GameMechanic\Level.cs" />
-    <Compile Include="Assets\_Scripts\GameMechanic\STMInput\STM_Manager.cs" />
-    <Compile Include="Assets\_Scripts\GameMechanic\STMInput\VCPReceiver.cs" />
     <Compile Include="Assets\_Scripts\GameMechanic\WallBehaviour.cs" />
-    <Compile Include="Assets\_Scripts\Player\PlayerBehaviour.cs" />
+    <Compile Include="Assets\_Scripts\Player\LifesScript.cs" />
     <Compile Include="Assets\_Scripts\Player\PlayerBehaviourVCP.cs" />
-    <Compile Include="Assets\_Scripts\Player\PlayerShooting.cs" />
     <Compile Include="Assets\_Scripts\Player\PlayerShootingVCP.cs" />
     <Compile Include="Assets\_Scripts\Player\PlayerSpawner.cs" />
     <Compile Include="Assets\_Scripts\Player\ReloadBar.cs" />
     <Compile Include="Assets\_Scripts\Player\RespawnShield.cs" />
-    <Compile Include="Assets\_Scripts\ShowEnemies.cs" />
     <Compile Include="Assets\_Scripts\Statics.cs" />
-    <Compile Include="Assets\_Scripts\UI\LifesScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
