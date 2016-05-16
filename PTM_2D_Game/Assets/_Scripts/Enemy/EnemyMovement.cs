@@ -5,7 +5,8 @@ public class EnemyMovement : MonoBehaviour {
 	#region Variables
 	public Transform[] obj = new Transform[0];
 	public int moveStart;	//width between zeroes of function
-	public int moveEnd;		//basically points in space to move ship
+	public int moveEnd;     //basically points in space to move ship
+	public float speed;       //speed of left-right flying
 
 	private Transform tr;
 	private Transform temp;
@@ -52,6 +53,7 @@ public class EnemyMovement : MonoBehaviour {
 	private bool lrDir = true;
 
 	void FlyAssault() {
+		if (Time.timeScale == 0) return;
 		if (flyDir) {
 			if (posX < moveEnd) {
 				tr.position = position + CalcPos();
@@ -72,12 +74,12 @@ public class EnemyMovement : MonoBehaviour {
 	void FlyLeftRight() {
 		// sprawdza kierunek true = lewo
 		if (lrDir) {
-			tr.position -= new Vector3(0.25f, 0);
+			tr.position -= new Vector3(speed * Time.deltaTime, 0);
 			if (tr.position.x < (StartPos.x - 5)) lrDir = false;
 		}
 		// jeśli nie to w prawo... :<
 		else {
-			tr.position += new Vector3(0.25f, 0);
+			tr.position += new Vector3(speed * Time.deltaTime, 0);
 			if (tr.position.x > (StartPos.x + 5)) lrDir = true;
 		}
 	}

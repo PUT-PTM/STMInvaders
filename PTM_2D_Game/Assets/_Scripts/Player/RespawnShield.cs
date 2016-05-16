@@ -19,7 +19,8 @@ public class RespawnShield : MonoBehaviour {
 	}
 	// Mechanic for shield resizing and changing opacity
 	void Update() {
-		if(remainingTime > 0) {
+		if (Time.timeScale == 0) return;
+		if (remainingTime > 0) {
 			color = sprite.color;
 			color = new Color(color.r, color.g, color.b, remainingTime / shieldMaxTime);
 			sprite.color = color;

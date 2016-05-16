@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
+	#region Variables
 	public AmmoStorage bullets;
 	public Text text { get; set; }
 	public float shootDelayMin;
@@ -16,9 +17,9 @@ public class EnemyBehaviour : MonoBehaviour {
 			text.text = value;
 		}
 	}
-
 	public Transform enemy { get; set; }
-
+	#endregion
+	#region Awake & Update
 	void Awake () {
 		enemy = GetComponent<Transform>();
 		timeToNextShoot = RandNextShoot;
@@ -32,6 +33,8 @@ public class EnemyBehaviour : MonoBehaviour {
 
 		enemy.position += new Vector3(-speed, -speed) * Time.deltaTime;
 	}
+	#endregion
+	#region Private functions
 	// Instantiate bullet
 	private void AddBullet() {
 		if (GetComponent<EnemyMovement>().CanShoot) {
@@ -44,6 +47,12 @@ public class EnemyBehaviour : MonoBehaviour {
 			} else Debug.LogError("Bullets not added to array!!!");
 		}
 	}
+	// Randomize time between last and next shoot
+	private float RandNextShoot {
+		get { return Random.Range(shootDelayMin, shootDelayMax); }
+	}
+	#endregion
+	#region OnTriggerEnter2D
 	// Reaction for various triggers
 	void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.gameObject.tag) {
@@ -66,8 +75,5 @@ public class EnemyBehaviour : MonoBehaviour {
 				break;
 		}
 	}
-	// Randomize time between last and next shoot
-	private float RandNextShoot {
-		get { return Random.Range(shootDelayMin, shootDelayMax); }
-	}
+	#endregion
 }

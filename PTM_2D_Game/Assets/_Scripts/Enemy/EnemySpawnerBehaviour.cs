@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 
 public class EnemySpawnerBehaviour : MonoBehaviour {
+	#region Variables
 	public Canvas canvas;
 	public Text textForEnemy;
 	public Text gameStatText;
@@ -15,7 +16,8 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 	// temporary flag, wanna do this better
 	private bool tempFlag = true;
 	public List<Transform> listOfShips;
-
+	#endregion
+	#region Start & Update
 	void Start () {
 		if (!canvas) {
 			Debug.LogError("Not added canvas reference!!!");
@@ -60,14 +62,8 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			gameStatText.gameObject.SetActive(true);
 		}
 	}
-
-	public void ClearList() {
-		for(int i = 0; i < listOfShips.Count; i++) {
-			Destroy(listOfShips[i].GetComponent<Transform>().gameObject);
-		}
-		listOfShips.Clear();
-	}
-
+	#endregion
+	#region Private functions
 	private void StartRandomShipFlying() {
 		if (listOfShips.Count > 0) {
 			int index = UnityEngine.Random.Range(0, listOfShips.Count - 1);
@@ -75,13 +71,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 			if (UnityEngine.Random.Range(0, 10) < 3) StartRandomShipFlying();
 		}
 	}
-
-	public void KillMe(Transform shipToKill) {
-		listOfShips.Remove(shipToKill);
-		Destroy(shipToKill.gameObject);
-	}
-
-	public Transform CreateClone(int i, Vector3 pos) {
+	private Transform CreateClone(int i, Vector3 pos) {
 		//cloning objects
 		Transform enemy = Instantiate(enemies[forceSpawnedEnemy]);
 		Text textForClone = Instantiate(textForEnemy);
@@ -102,4 +92,18 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 
 		return enemy;
 	}
+	#endregion
+	#region Public functions
+	public void ClearList() {
+		for (int i = 0; i < listOfShips.Count; i++) {
+			Destroy(listOfShips[i].GetComponent<Transform>().gameObject);
+		}
+		listOfShips.Clear();
+	}
+
+	public void KillMe(Transform shipToKill) {
+		listOfShips.Remove(shipToKill);
+		Destroy(shipToKill.gameObject);
+	}
+	#endregion
 }

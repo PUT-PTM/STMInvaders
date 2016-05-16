@@ -23,8 +23,8 @@ public class StarsBehaviour : MonoBehaviour {
 			posCnt1 = 0;
 		}
 		else {
-			stars1.position -= new Vector3(0f, speed);
-			posCnt1 += speed;
+			stars1.position -= new Vector3(0f, speed * Time.deltaTime);
+			posCnt1 += speed * Time.deltaTime;
 		}
 		// stars 2
 		if (posCnt2 >= 475f) {
@@ -32,8 +32,8 @@ public class StarsBehaviour : MonoBehaviour {
 			posCnt2 = 0;
 		}
 		else {
-			stars2.position -= new Vector3(0f, speed);
-			posCnt2 += speed;
+			stars2.position -= new Vector3(0f, speed * Time.deltaTime);
+			posCnt2 += speed * Time.deltaTime;
 		}
 	}
 }

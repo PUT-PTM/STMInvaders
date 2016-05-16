@@ -27,10 +27,10 @@ public class EnemyTextBehaviour : MonoBehaviour {
 			if(ImDead == false) {
 				Random.seed = (Time.frameCount);
 				int random = Random.Range(0, 40);
-				if (random < 10 && random > 6) text.text = "You killed me!!!";
-				else if (random < 20 && random > 16) text.text = "I see light :o";
-				else if (random < 30 && random > 26) text.text = "Shit, noooope!!!";
-				else if (random < 40 && random > 36) text.text = "Mommy ;___;";
+				if (random < 10 && random > 7) text.text = "You killed me!!!";
+				else if (random < 20 && random > 17) text.text = "I see light :o";
+				else if (random < 30 && random > 27) text.text = "Damn, noooope!!!";
+				else if (random < 40 && random > 37) text.text = "Mommy ;___;";
 				ImDead = true;
 			}
 		}

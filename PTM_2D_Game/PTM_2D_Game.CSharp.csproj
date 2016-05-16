@@ -66,9 +66,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CAŁKOWANIE\CAŁKOMATOR.cs" />
-    <Compile Include="Assets\InGameMenu.cs" />
-    <Compile Include="Assets\StarsBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Bullets\BulletBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Enemy\EnemyMovement.cs" />
@@ -77,7 +74,9 @@
     <Compile Include="Assets\_Scripts\Enemy\ShowEnemies.cs" />
     <Compile Include="Assets\_Scripts\GameMechanic\AmmoStorage.cs" />
     <Compile Include="Assets\_Scripts\GameMechanic\GameStatusController.cs" />
+    <Compile Include="Assets\_Scripts\GameMechanic\InGameMenu.cs" />
     <Compile Include="Assets\_Scripts\GameMechanic\Level.cs" />
+    <Compile Include="Assets\_Scripts\GameMechanic\StarsBehaviour.cs" />
     <Compile Include="Assets\_Scripts\GameMechanic\WallBehaviour.cs" />
     <Compile Include="Assets\_Scripts\Player\LifesScript.cs" />
     <Compile Include="Assets\_Scripts\Player\PlayerBehaviourVCP.cs" />
