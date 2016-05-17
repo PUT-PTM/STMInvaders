@@ -1,4 +1,4 @@
-### Space Invaders
+># Space Invaders
 
 Overview
 --------
@@ -13,9 +13,9 @@ Game is based on popular Space Invaders - player fight with enemy ships in space
 
 Tools
 -----
-	- Coocox CoIDE - programm for microcontroller
-	- Unity3D - game engine
-	- Microsoft Visual Studio 2015 Enterprise - C# scripts for game
+- Coocox CoIDE - programm for microcontroller
+- Unity3D - game engine
+- Microsoft Visual Studio 2015 Enterprise - C# scripts for game
 
 How to compile
 --------------
