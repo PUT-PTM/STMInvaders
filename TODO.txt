@@ -1,47 +1,55 @@
 # Game TODO list
-
-1. More various types of bullets and weapons
-	a) For player and enemies
-	b) Weapons for enemies based on type (see 3d)
-	c) Shop with  :>
-2. Shop
-	a) Various, better weapons (faster, more bullets etc)
-	b) Additional effects (?)
-	c) Shields agains enemies (something like extra lifes)
-	d) Helpers (small ships for help ?)
-3. Enemies
-	a) Better spawning (edit EnemiesSpawner)
-	b) A little more advanced moves (not only from left to right like this one right now )
-	c) Customizable tracks and algoritms for enemies (HARD!!!)
-	d) More "types" of enemies (more hp, various speed etc)
+----------------
+- More various types of bullets and weapons
+    - [ ] For player and enemies
+    - [ ] Weapons for enemies based on type
+    - [ ] Shop with  :>
+- Shop
+    - [ ] Various, better weapons (faster, more bullets etc)
+	- [ ] Additional effects (?)
+	- [ ] Shields agains enemies (something like extra lifes)
+	- [ ] Helpers (small ships for help ?)
+- Enemies
+	- [ ] Better spawning (edit EnemiesSpawner)
+	- [ ] A little more advanced moves (not only from left to right like this one right now )
+	- [ ] Customizable tracks and algoritms for enemies (HARD!!!)
+	- [ ] More "types" of enemies (more hp, various speed etc)
 		- maybe life bar for stronger types?
-	e) BOSSES
-4. Levels
-5. Funny texts for enemies (done)
-6. BOSSES
-	a) Maybe great idea to use Unity-joints for lasers etc :> (something like big, bad robo )
-	b) Advanced shooting system
-		- more bullets at the same moment
-		- make use of joints
-	c) Of course much bigger than "normal" enemies
-	d) Life bar for boss
-7. Simple UI (Unity3d User Interface)
-	a) Main menu
-	b) In-game pause menu
-	c) Saving game status
-	d) 
+	- [ ] BOSSES
+- [ ] Levels
+- [x] Funny texts for enemies
+- [ ] Funny texts when kill player
+- [ ] BOSSES
+	- [ ] Maybe great idea to use Unity-joints for lasers etc :> (something like big, bad robo )
+	- Advanced shooting system
+		- [ ] more bullets at the same moment
+		- [ ] make use of joints
+	- [ ] Of course much bigger than "normal" enemies
+	- [ ] Life bar for boss
+- Simple UI (Unity3d User Interface)
+	- [ ] Main menu
+	- [x] In-game pause menu
+	- [ ] Saving game status
 
-########################## Hot TODO list ##########################
-GameObject for handle reference to all bullets (optimization fix - now all enemies and player store it)
-	
 # STM TODO list
-
+---------------
+- [ ] Refactor everything...
+- [ ] All inits for one file (small inits from main.c)
+- [ ] ADD THIS TIMER INTERRUPT!!!
+- [ ] Remove Tiler Majerle's code (TM_DISCO, TM_DELAY etc)
+  - [ ] Use "normal" button
+- [ ] Change main-loop - add special condition when state not change
 
 # Graphics TODO list (list of needed graphics for game)
+-------------------------------------------------------
+- [ ] More ships (especially for enemies)
+- [ ] More beatifull bullets and weapons
+	- [ ] LASER BEAM
+	  - [ ] red for bosses
+	  - [ ] blue for player
+- [x] Background (stars etc)
 
-1. More ships (especially for enemies)
-2. More beatifull bullets and weapons
-	a) LASER BEAM (red for bosses and blue for player 4 example)
-3. Background (stars etc)
-4. 
-
+# Other TODO
+- [ ] Check files in STM_CONTROLLER_OLD and remove it
+- [ ] Add all licenses
+- [ ] Clear STM_Projct/SOUNDS/ folder
