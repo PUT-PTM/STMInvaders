@@ -1,5 +1,4 @@
 #ifndef ACCELOMETER_H
-#define ACCELOMETER_H
 #include "stm32f4_discovery_lis302dl.h"
 
 uint8_t acc_x = 0;
