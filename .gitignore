@@ -35,6 +35,7 @@ sysinfo.txt
 # CoIDE files
 *.cogui
 *.comarker
+*.pbxproj
 
 
 #####################
