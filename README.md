@@ -38,8 +38,7 @@ Otherwise you should connect "STM" to PC. You will need...
 
 Future improvements
 -------------------
-See TODO.txt, there is list of some planned features:
->https://github.com/PUT-PTM/STMInvaders/blob/master/TODO.txt
+See [TODO](https://github.com/PUT-PTM/STMInvaders/blob/master/TODO.txt), there is list of some planned features.
 
 Attributions
 ------------
@@ -54,10 +53,9 @@ Section TODO
 Credits
 -------
 
-Contributors:
-Rafał Kopczyński && Artur Jędryczkowski
+Contributors: **Rafał Kopczyński** && **Artur Jędryczkowski**
 
 
 The project was conducted during the Microprocessor Lab course held by the Institute of Control and Information Engineering, Poznan University of Technology.
 
-Supervisor: Michał Fularz 
+Supervisor: **Michał Fularz**
