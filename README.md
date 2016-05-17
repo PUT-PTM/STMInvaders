@@ -13,23 +13,23 @@ Game is based on popular Space Invaders - player fight with enemy ships in space
 
 Tools
 -----
-- Coocox CoIDE - programm for microcontroller
-- Unity3D - game engine
-- Microsoft Visual Studio 2015 Enterprise - C# scripts for game
+	- Coocox CoIDE - programm for microcontroller
+	- Unity3D - game engine
+	- Microsoft Visual Studio 2015 Enterprise - C# scripts for game
 
 How to compile
 --------------
 1. Without microcontroller
 Game can run without controller (but with no sounds), so everything you need is Unity3D. 
-- Open Unity and add folder STMInvaders/PTM_2D_Game/ as new project.
-- Go to tab "File->Build Settings..."
-- Choose scenes (for now only _Scenes/level0)
-- Select platform "PC, MAC and Linux standalone"
-- Now you can run build (Unity should ask you for output folder)
+	- Open Unity and add folder STMInvaders/PTM_2D_Game/ as new project.
+	- Go to tab "File->Build Settings..."
+	- Choose scenes (for now only _Scenes/level0)
+	- Select platform "PC, MAC and Linux standalone"
+	- Now you can run build (Unity should ask you for output folder)
 
 2. With microcontroller (You need of course STM32f4-Discovery connected to PC)
-- Go to STMInvaders/STM_project/STM_CONTROLLER/
-- Open coocox project (*)
+	- Go to STMInvaders/STM_project/STM_CONTROLLER/
+	- Open coocox project (*)
 
 How to run
 ----------
@@ -43,8 +43,9 @@ See TODO.txt, there is list of some planned features:
 
 Attributions
 ------------
->www.Unity3d.com
->https://github.com/xenovacivus/STM32DiscoveryVCP
+>- www.Unity3d.com
+>- https://github.com/xenovacivus/STM32DiscoveryVCP
+>- http://www1.coocox.org/CoIDE/CoIDE_Updates.htm
 
 License
 -------
@@ -58,4 +59,5 @@ Rafał Kopczyński && Artur Jędryczkowski
 
 
 The project was conducted during the Microprocessor Lab course held by the Institute of Control and Information Engineering, Poznan University of Technology.
+
 Supervisor: Michał Fularz 
