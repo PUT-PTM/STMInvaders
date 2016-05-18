@@ -11,6 +11,8 @@ public class PlayerShootingVCP : MonoBehaviour {
 	public int magazine;        // bullets remaining in magazine
 	private float bulletTimer;  // time between shoots
 	public float reload;        // time between next series
+
+	private bool makeSound = true;
 	#endregion
 	#region Start & Update
 	void Start() {
@@ -29,7 +31,10 @@ public class PlayerShootingVCP : MonoBehaviour {
 			if (vcp) {
 				if (bulletTimer <= 0 && vcp.GetButton()) {
 					AddBullet();
-					vcp.RunSound("shoot");
+					if(makeSound) {
+						vcp.RunSound("shoot");
+						makeSound = false;
+					}
 					magazine--;
 					bulletTimer = 0.1f;
 				}
@@ -39,7 +44,10 @@ public class PlayerShootingVCP : MonoBehaviour {
 			else {
 				if (bulletTimer <= 0 && Input.GetKey(KeyCode.Space)) {
 					AddBullet();
-					vcp.RunSound("shoot");
+					if (makeSound) {
+						vcp.RunSound("shoot");
+						makeSound = false;
+					}
 					magazine--;
 					bulletTimer = 0.1f;
 				}
@@ -59,6 +67,7 @@ public class PlayerShootingVCP : MonoBehaviour {
 			}
 			else {
 				magazine = 10;
+				makeSound = true;
 			}
 		}
 	}
@@ -73,6 +82,7 @@ public class PlayerShootingVCP : MonoBehaviour {
 	public void ClearOnDeath() {
 		reload = 1f;
 		magazine = 10;
+		makeSound = true;
 	}
 	#endregion
 }
