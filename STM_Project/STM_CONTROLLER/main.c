@@ -10,7 +10,6 @@
 #include "usb_dcd_int.h"
 #include "accelerometer.h"
 #include "tm_stm32f4_delay.h"
-#include "tm_stm32f4_disco.h"
 #include "defines.h"
 #include "stm32f4xx_tim.h"
 //^^usb etc
@@ -61,8 +60,7 @@ int main(void)
 	SystemInit();
 
 	// Initialize button and LEDs
-	TM_DISCO_ButtonInit();
-	TM_DISCO_LedInit();
+	init_GPIO();
 
 	// Initialize delay
 	TM_DELAY_Init();
@@ -104,12 +102,13 @@ int main(void)
 			if(acc_x >= 190){
 				data[0]='_';
 				data[1]='S';
-				//TM_DISCO_LedOn(LED_GREEN);
+				GPIOD->BSRRL = 0x1000; //GREEN LED
+
 			}
 			else if(acc_x <= 60){
 				data[0]='W';
 				data[1]='_';
-				//TM_DISCO_LedOn(LED_RED);
+				GPIOD->BSRRL = 0x4000;// RED LED
 			}
 		}
 		// Checking Y axis (horizontal move)
@@ -117,22 +116,20 @@ int main(void)
 			if(acc_y >= 190){
 				data[2]='_';
 				data[3]='D';
-				//TM_DISCO_LedOn(LED_BLUE);
+				GPIOD->BSRRL = 0x8000; //BLUE LED
+
 			}
 			else if(acc_y <= 60){
 				data[2]='A';
 				data[3]='_';
-				//TM_DISCO_LedOn(LED_ORANGE);
+				GPIOD->BSRRL = 0x2000; //ORANGE LED
 			}
 		}
 		// Checking button
-		if(TM_DISCO_ButtonPressed()){
+		if(GPIOA->IDR & 0x0001){
 			data[4]='B';
 			//ChangeSound('0');
-			//TM_DISCO_LedOn(LED_ALL);
-		}
-		if(TM_DISCO_ButtonOnReleased()){
-			data[4]='_';
+
 		}
 
 		if(timerValue==50){
@@ -148,6 +145,10 @@ int main(void)
 			//	lastSound = sound;
 				ChangeSound(sound);
 			//}
+				GPIOD->BSRRH = 0x8000;
+				GPIOD->BSRRH = 0x1000;
+				GPIOD->BSRRH = 0x2000;
+				GPIOD->BSRRH = 0x4000;
 		}
 	}
 	return 0;
@@ -205,18 +206,6 @@ void ColorfulRingOfDeath(void)
 	}
 }
 
-/*
- * Interrupt Handlers
- */
-
-/*void SysTick_Handler(void)
-{
-	ticker++;
-	if (downTicker > 0)
-	{
-		downTicker--;
-	}
-}*/
 
 void NMI_Handler(void)       {}
 void HardFault_Handler(void) { ColorfulRingOfDeath(); }
@@ -242,3 +231,29 @@ void OTG_FS_WKUP_IRQHandler(void)
   }
   EXTI_ClearITPendingBit(EXTI_Line18);
 }
+
+void init_GPIO(void){
+	GPIO_InitTypeDef GPIO_InitStruct;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_15 | GPIO_Pin_14 | GPIO_Pin_13 | GPIO_Pin_12;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
+	GPIO_Init(GPIOA, &GPIO_InitStruct);
+	GPIOD->BSRRL = 0xF000;
+	Delay(1000000L);
+	GPIOD->BSRRH = 0xF000;
+
+}
+
