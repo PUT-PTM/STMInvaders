@@ -15,6 +15,7 @@
 //^^usb etc
 //my sounds
 #include "sounds.h"
+#include "initialization.h"
 
 volatile uint32_t ticker;//, downTicker;
 
@@ -56,39 +57,11 @@ void OTG_FS_WKUP_IRQHandler(void);
 
 int main(void)
 {
-	// Initialize system
-	SystemInit();
-
-	// Initialize button and LEDs
-	init_GPIO();
-
-	// Initialize delay
-	TM_DELAY_Init();
-	
-	// Init sounds
-	InitSounds();
-		
-	// Initialize accelerometer
-	// 50ms delay for accelerometer calibration
-	AccInit();
-	Delay(50000);
-
-	// Initialize USB, IO, SysTick, and all those other things you do in the morning
-	init();
-
 	unsigned int i;
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	TIM_TimeBaseStructure.TIM_Period = 20000;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Prescaler = 50;
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
-	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
-	TIM_Cmd(TIM2, ENABLE);
-
 	int timerValue;
 	char buffer[10];
+	Global_Init();
+
 	while (1){
 		timerValue = TIM_GetCounter(TIM2);
 		// Updating accelerometer
@@ -103,7 +76,6 @@ int main(void)
 				data[0]='_';
 				data[1]='S';
 				GPIOD->BSRRL = 0x1000; //GREEN LED
-
 			}
 			else if(acc_x <= 60){
 				data[0]='W';
@@ -117,7 +89,6 @@ int main(void)
 				data[2]='_';
 				data[3]='D';
 				GPIOD->BSRRL = 0x8000; //BLUE LED
-
 			}
 			else if(acc_y <= 60){
 				data[2]='A';
@@ -145,10 +116,10 @@ int main(void)
 			//	lastSound = sound;
 				ChangeSound(sound);
 			//}
-				GPIOD->BSRRH = 0x8000;
+				GPIOD->BSRRH = 0x4000; //turn of of leds
 				GPIOD->BSRRH = 0x1000;
 				GPIOD->BSRRH = 0x2000;
-				GPIOD->BSRRH = 0x4000;
+				GPIOD->BSRRH = 0x8000;
 		}
 	}
 	return 0;
@@ -182,12 +153,6 @@ void init(){
 	);
 }
 
-/*
- * Call this to indicate a failure.  Blinks the STM32F4 discovery LEDs
- * in sequence.  At 168Mhz, the blinking will be very fast - about 5 Hz.
- * Keep that in mind when debugging, knowing the clock speed might help
- * with debugging.
- */
 void ColorfulRingOfDeath(void)
 {
 	uint16_t ring = 1;
@@ -232,28 +197,5 @@ void OTG_FS_WKUP_IRQHandler(void)
   EXTI_ClearITPendingBit(EXTI_Line18);
 }
 
-void init_GPIO(void){
-	GPIO_InitTypeDef GPIO_InitStruct;
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_15 | GPIO_Pin_14 | GPIO_Pin_13 | GPIO_Pin_12;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_DOWN;
-	GPIO_Init(GPIOA, &GPIO_InitStruct);
-	GPIOD->BSRRL = 0xF000;
-	Delay(1000000L);
-	GPIOD->BSRRH = 0xF000;
-
-}
 
