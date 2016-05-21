@@ -33,11 +33,11 @@
 
 # STM TODO list
 ---------------
-- [ ] Refactor everything...
-- [ ] All inits for one file (small inits from main.c)
+- [+/-] Refactor everything...
+- [+/-] All inits for one file (small inits from main.c)
 - [ ] ADD THIS TIMER INTERRUPT!!!
-- [ ] Remove Tiler Majerle's code (TM_DISCO, TM_DELAY etc)
-  - [ ] Use "normal" button
+- [x] Remove Tiler Majerle's code (TM_DISCO, TM_DELAY etc)
+  - [x] Use "normal" button
 - [ ] Change main-loop - add special condition when state not change
 
 # Graphics TODO list (list of needed graphics for game)

@@ -10,12 +10,12 @@
 #include "usb_dcd_int.h"
 #include "accelerometer.h"
 #include "tm_stm32f4_delay.h"
-#include "tm_stm32f4_disco.h"
 #include "defines.h"
 #include "stm32f4xx_tim.h"
 //^^usb etc
 //my sounds
 #include "sounds.h"
+#include "initialization.h"
 
 volatile uint32_t ticker;//, downTicker;
 
@@ -57,40 +57,11 @@ void OTG_FS_WKUP_IRQHandler(void);
 
 int main(void)
 {
-	// Initialize system
-	SystemInit();
-
-	// Initialize button and LEDs
-	TM_DISCO_ButtonInit();
-	TM_DISCO_LedInit();
-
-	// Initialize delay
-	TM_DELAY_Init();
-	
-	// Init sounds
-	InitSounds();
-		
-	// Initialize accelerometer
-	// 50ms delay for accelerometer calibration
-	AccInit();
-	Delay(50000);
-
-	// Initialize USB, IO, SysTick, and all those other things you do in the morning
-	init();
-
 	unsigned int i;
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	TIM_TimeBaseStructure.TIM_Period = 20000;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Prescaler = 50;
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
-	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
-	TIM_Cmd(TIM2, ENABLE);
-
 	int timerValue;
 	char buffer[10];
+	Global_Init();
+
 	while (1){
 		timerValue = TIM_GetCounter(TIM2);
 		// Updating accelerometer
@@ -104,12 +75,12 @@ int main(void)
 			if(acc_x >= 190){
 				data[0]='_';
 				data[1]='S';
-				//TM_DISCO_LedOn(LED_GREEN);
+				GPIOD->BSRRL = 0x1000; //GREEN LED
 			}
 			else if(acc_x <= 60){
 				data[0]='W';
 				data[1]='_';
-				//TM_DISCO_LedOn(LED_RED);
+				GPIOD->BSRRL = 0x4000;// RED LED
 			}
 		}
 		// Checking Y axis (horizontal move)
@@ -117,22 +88,19 @@ int main(void)
 			if(acc_y >= 190){
 				data[2]='_';
 				data[3]='D';
-				//TM_DISCO_LedOn(LED_BLUE);
+				GPIOD->BSRRL = 0x8000; //BLUE LED
 			}
 			else if(acc_y <= 60){
 				data[2]='A';
 				data[3]='_';
-				//TM_DISCO_LedOn(LED_ORANGE);
+				GPIOD->BSRRL = 0x2000; //ORANGE LED
 			}
 		}
 		// Checking button
-		if(TM_DISCO_ButtonPressed()){
+		if(GPIOA->IDR & 0x0001){
 			data[4]='B';
 			//ChangeSound('0');
-			//TM_DISCO_LedOn(LED_ALL);
-		}
-		if(TM_DISCO_ButtonOnReleased()){
-			data[4]='_';
+
 		}
 
 		if(timerValue==50){
@@ -148,6 +116,10 @@ int main(void)
 			//	lastSound = sound;
 				ChangeSound(sound);
 			//}
+				GPIOD->BSRRH = 0x4000; //turn of of leds
+				GPIOD->BSRRH = 0x1000;
+				GPIOD->BSRRH = 0x2000;
+				GPIOD->BSRRH = 0x8000;
 		}
 	}
 	return 0;
@@ -181,12 +153,6 @@ void init(){
 	);
 }
 
-/*
- * Call this to indicate a failure.  Blinks the STM32F4 discovery LEDs
- * in sequence.  At 168Mhz, the blinking will be very fast - about 5 Hz.
- * Keep that in mind when debugging, knowing the clock speed might help
- * with debugging.
- */
 void ColorfulRingOfDeath(void)
 {
 	uint16_t ring = 1;
@@ -205,18 +171,6 @@ void ColorfulRingOfDeath(void)
 	}
 }
 
-/*
- * Interrupt Handlers
- */
-
-/*void SysTick_Handler(void)
-{
-	ticker++;
-	if (downTicker > 0)
-	{
-		downTicker--;
-	}
-}*/
 
 void NMI_Handler(void)       {}
 void HardFault_Handler(void) { ColorfulRingOfDeath(); }
@@ -242,3 +196,6 @@ void OTG_FS_WKUP_IRQHandler(void)
   }
   EXTI_ClearITPendingBit(EXTI_Line18);
 }
+
+
+
