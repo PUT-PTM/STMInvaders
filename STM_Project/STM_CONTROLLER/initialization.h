@@ -1,5 +1,4 @@
 #include "main.h"
-
 void init_GPIO(void){
 	GPIO_InitTypeDef GPIO_InitStruct;
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -23,6 +22,36 @@ void init_GPIO(void){
 	GPIOD->BSRRH = 0xF000;
 
 }
+void AccInit(){
+	LIS302DL_InitTypeDef AccInitStr;
+	AccInitStr.Axes_Enable = LIS302DL_XYZ_ENABLE;
+	AccInitStr.Full_Scale = LIS302DL_FULLSCALE_2_3;
+	AccInitStr.Power_Mode = LIS302DL_LOWPOWERMODE_ACTIVE;
+	AccInitStr.Output_DataRate = LIS302DL_DATARATE_100;
+	AccInitStr.Self_Test = LIS302DL_SELFTEST_NORMAL;
+	LIS302DL_Init(&AccInitStr);
+}
+uint8_t acc_x = 0;
+uint8_t acc_y = 0;
+uint8_t acc_z = 0;
+void UpdateAccGlobals(){
+	LIS302DL_Read(&acc_x, LIS302DL_OUT_X_ADDR, 1);
+	LIS302DL_Read(&acc_y, LIS302DL_OUT_Y_ADDR, 1);
+	LIS302DL_Read(&acc_z, LIS302DL_OUT_Z_ADDR, 1);
+}
+
+Timer_Init()
+{
+	   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
+				TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+				TIM_TimeBaseStructure.TIM_Period = 40000;
+				TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+				TIM_TimeBaseStructure.TIM_Prescaler = 50;
+				TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+				TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+				TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+				TIM_Cmd(TIM2, ENABLE);
+}
 Global_Init(void)
 {
 	// Initialize system
@@ -44,14 +73,7 @@ Global_Init(void)
 		init();
 
 		//timerINit
-		    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
-			TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-			TIM_TimeBaseStructure.TIM_Period = 40000;
-			TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-			TIM_TimeBaseStructure.TIM_Prescaler = 50;
-			TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-			TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
-			TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
-			TIM_Cmd(TIM2, ENABLE);
+		Timer_Init();
+
 
 }
