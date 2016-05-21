@@ -58,21 +58,12 @@ public class EnemyBehaviour : MonoBehaviour {
 		switch (trigger.gameObject.tag) {
 			case "Enemy": break;
 			case "Player": break;
-			case "Wall": break;
-			case "SideWall": break;
-			case "BottomWall": break;
-			case "TopWall": break;
 			case "PlayerBullet": {
 					Destroy(trigger.gameObject);
 					transform.DetachChildren();
 					GetComponentInParent<EnemySpawnerBehaviour>().KillMe(this.transform);
 					break;
 				}
-			case "EnemyBullet": break;
-			default:
-				// Note for debugging
-				Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
-				break;
 		}
 	}
 	#endregion

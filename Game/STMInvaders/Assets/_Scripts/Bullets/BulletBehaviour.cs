@@ -35,21 +35,11 @@ public class BulletBehaviour : MonoBehaviour {
 	}
 	public void OnTriggerEnter2D(Collider2D trigger) {
 		switch (trigger.tag) {
-			case "Enemy": break;
-			case "Player": break;
-			case "EnemyBullet": break;
-			case "Wall": break;
-			case "BottomWall": break;
-			case "TopWall": break;
 			case "PlayerBullet": {
 					Destroy(trigger.gameObject);
 					Destroy(this.gameObject);
 					break;
 				}
-			default:
-				// Note for debugging
-				Debug.Log("Unknown trigger: " + trigger.gameObject.tag, trigger);
-				break;
 		}
 	}
 }

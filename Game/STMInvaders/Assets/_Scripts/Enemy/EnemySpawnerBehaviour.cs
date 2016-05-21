@@ -31,7 +31,7 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 		}
 		listOfShips = new List<Transform>();
 	}
-	private float flyDelay = 0;
+	private float flyDelay = 0f;
 	public float flyDelayMin;
 	public float flyDelayMax;
 	// At this moment spawn static countof enemies for tests
@@ -67,8 +67,8 @@ public class EnemySpawnerBehaviour : MonoBehaviour {
 	private void StartRandomShipFlying() {
 		if (listOfShips.Count > 0) {
 			int index = UnityEngine.Random.Range(0, listOfShips.Count - 1);
-			listOfShips[index].GetComponent<EnemyMovement>().FlyNow();
-			if (UnityEngine.Random.Range(0, 10) < 3) StartRandomShipFlying();
+			listOfShips[index].GetComponent<EnemyMovement>().StartAssault();
+			if (UnityEngine.Random.Range(0, 10) < 1) StartRandomShipFlying();
 		}
 	}
 	private Transform CreateClone(int i, Vector3 pos) {

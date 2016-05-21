@@ -1,93 +1,133 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class EnemyMovement : MonoBehaviour {
-	#region Variables
-	public Transform[] obj = new Transform[0];
-	public int moveStart;	//width between zeroes of function
-	public int moveEnd;     //basically points in space to move ship
-	public float speed;       //speed of left-right flying
-
-	private Transform tr;
-	private Transform temp;
-	private Vector2 position;
-	private float posX, pos;
-	public bool dir;
-
-	//tylko tymczasowe flagi pomocnicze, coś na zasadzie - jak jest true to lataj i w którą stronę
-	//TODO przerobić na delegaty
-	private bool flyDir = true;     //ta określa kierunek (góra czy dół)
-	private bool canShoot = false;  //ta pozwala lecieć
+	#region Public Variables
+	public float speedLR;	//speed of ship (left or right)
+	public float speedUD;   //speed of ship (up or down)
+	public float delta;     //distance from "startPos" while LR flying
+	public bool dirLR;		//direction of flying (left or right)
 	public bool CanShoot { get { return canShoot; } }
+	#endregion
+	#region Private Variables
+	//if false then fly left, else fly right
+	private static bool LR_STATE = false;
+	private Transform enemy;	//enemy transform
+	private bool canShoot;		//says if ship can shoot or not(basis on flying mode)
+	private Action flyingMode;	//flying-mode delegate
+	private Vector2 startPos;   //position of ship at start
+	private bool assault;		//flag of assault flying mode
+	private float x1, x2, a;    //variables for calculate pos. while assault
+	private bool flyTemp;       //additional flag (whatever - it works :P )
+	private bool endAssault;    //flag needed to easy back flying LR again
+	private bool lastDirLR;		//needed to synchronize with other ships
 	#endregion
 	#region Start & Update
 	void Start() {
-		temp = tr = GetComponent<Transform>();
-		position = temp.position;   //point of reference for function
-		posX = -moveStart / 2;      //position X counting from start position
-		pos = 0;                    //position Y counting from start position
-		moveEnd = Random.Range(30, 100);
-		//its just for help, with this flag enemy ships not hit in the walls
-		if (position.x > 0) dir = false; else dir = true;
-		StartPos = new Vector2(position.x, position.y);
-		flyingEvent = FlyLeftRight;
+		enemy = GetComponent<Transform>();
+		startPos = new Vector2(enemy.position.x, enemy.position.y);
+		SetSqareFooVars();
+		flyingMode = FlyingLeft;
+		canShoot = false;
+		dirLR = false;
+		assault = false;
 	}
-	void Update () {
-		flyingEvent();
-	}
-	#endregion
-	#region Others
-	private Vector2 CalcPos(bool dir = true) {
-		if(dir) return new Vector2(Func(posX++), -pos++);
-		else return new Vector2(Func(posX--), -pos--);
-	}
-	private float Func(float x) {
-		if (dir) return -0.01f * x * x + 55f;
-		else return 0.01f * x * x - 55f;
-	}
-	#endregion
-	#region Tryby lotu
-	private delegate void FlyingMode();
-	private FlyingMode flyingEvent;
-	private Vector2 StartPos;
-	private bool lrDir = true;
 
-	void FlyAssault() {
-		if (Time.timeScale == 0) return;
-		if (flyDir) {
-			if (posX < moveEnd) {
-				tr.position = position + CalcPos();
+	void Update() {
+		flyingMode();
+	}
+	#endregion
+	#region Flying modes
+	private void FlyingLeft() {
+		if (!flyTemp) {
+			enemy.position -= new Vector3(speedLR * Time.deltaTime, 0);
+			if (enemy.position.x <= startPos.x - delta) {
+				flyTemp = true;
 			}
-			else flyDir = false;
-		}
-		else {
-			if (posX > (-moveStart / 2)) {
-				tr.position = position + CalcPos(false);
-			}
-			else {
-				flyDir = true;
-				flyingEvent = FlyLeftRight;
-				canShoot = false;
+		} else {
+			enemy.position += new Vector3(speedLR * Time.deltaTime, 0);
+			if (enemy.position.x >= startPos.x) {
+				dirLR = false;
+				flyTemp = false;
+				if (dirLR != LR_STATE) LR_STATE = false;
+				if (!assault) flyingMode = FlyingRight;
+				else {
+					enemy.position = startPos;
+					flyingMode = Assault;
+					canShoot = true;
+				}
 			}
 		}
 	}
-	void FlyLeftRight() {
-		// sprawdza kierunek true = lewo
-		if (lrDir) {
-			tr.position -= new Vector3(speed * Time.deltaTime, 0);
-			if (tr.position.x < (StartPos.x - 5)) lrDir = false;
+	private void FlyingRight() {
+		if (!flyTemp) {
+			enemy.position += new Vector3(speedLR * Time.deltaTime, 0);
+			if (enemy.position.x >= startPos.x + delta) {
+				flyTemp = true;
+			}
 		}
-		// jeśli nie to w prawo... :<
 		else {
-			tr.position += new Vector3(speed * Time.deltaTime, 0);
-			if (tr.position.x > (StartPos.x + 5)) lrDir = true;
+			enemy.position -= new Vector3(speedLR * Time.deltaTime, 0);
+			if (enemy.position.x <= startPos.x) {
+				dirLR = true;
+				flyTemp = false;
+				if (dirLR != LR_STATE) LR_STATE = true;
+				if (!assault) flyingMode = FlyingLeft;
+				else {
+					enemy.position = startPos;
+					flyingMode = Assault;
+					canShoot = true;
+				}
+			}
 		}
 	}
-	// change flying mode
-	public void FlyNow() {
-		flyingEvent = FlyAssault;
-		tr.position = new Vector3(StartPos.x, StartPos.y);
-		canShoot = true;
+	private void Assault() {
+		if (!endAssault) enemy.position = CountPosition();
+		else {
+			float y = enemy.position.y;
+			if (y > startPos.y - 1.5f && y < startPos.y + 1.5f) {
+				flyingMode = BackToStart;
+				lastDirLR = LR_STATE;
+			}
+			else enemy.position = CountPosition();
+		}
+	}
+	private void BackToStart() {
+		if (lastDirLR != LR_STATE) {
+			endAssault = false;
+			assault = false;
+			canShoot = false;
+			dirLR = LR_STATE;
+			enemy.position = startPos;
+			if (!dirLR) flyingMode = FlyingRight;
+			else flyingMode = FlyingLeft;
+			flyingMode();
+		}
+	}
+	#endregion
+	#region Public functions
+	public void StartAssault() {
+		assault = true;
+	}
+	public void EndAssault() {
+		endAssault = true;
+	}
+	public void LetMeGo() {
+
+	}
+	#endregion
+	#region Private Functions
+	private Vector3 CountPosition() {
+		float y = enemy.position.y - speedUD * Time.deltaTime;
+		float result = a * (y - (x2)) * (y - (x1));
+		return new Vector3(result + startPos.x, y);
+	}
+	private void SetSqareFooVars() {
+		x2 = startPos.y;
+		x1 = x2 - 150f;
+		if (startPos.x > 0) a = 0.015f;
+		else a = -0.015f;
 	}
 	#endregion
 }
