@@ -33,8 +33,8 @@
 
 # STM TODO list
 ---------------
-- [+/-] Refactor everything...
-- [+/-] All inits for one file (small inits from main.c)
+- [x] Refactor everything...
+- [x] All inits for one file (small inits from main.c)
 - [ ] ADD THIS TIMER INTERRUPT!!!
 - [x] Remove Tiler Majerle's code (TM_DISCO, TM_DELAY etc)
   - [x] Use "normal" button
