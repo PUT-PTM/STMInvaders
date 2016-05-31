@@ -3,7 +3,7 @@
 Overview
 --------
 >- [Game] Folder with Unity3d game and other things related to game
->- [STM_Project] Folder with Coocox project
+>- [STM_CONTROLLER] Folder with Coocox project
 
 Description
 -----------
@@ -29,12 +29,13 @@ Game could be run without controller (but with no sounds), so everything you nee
 	- Now you can run build (Unity should ask you for output folder)
 
 2. With microcontroller (You need of course STM32f4-Discovery connected to PC)
-	- Go to **STMInvaders/STM_project/STM_CONTROLLER/**
+	- Go to **STMInvaders/STM_CONTROLLER/**
 	- Open coocox project (STM_CONTROLLER.coproj)
 	- Build project and save it on microcontroller
 	- If you have connected some sound output to STM (some headphones) you should hear some sound
 	- Now "STM" should be detected in hardware manager (on windows) but it's still not seen as VCOM port, so you just need to remove STM on plug again
 	- If you see STM as VCOMX (X is some number) we are in home :)
+	- Now build game project (see 1.)
 
 How to run
 ----------
@@ -64,7 +65,7 @@ The project was conducted during the Microprocessor Lab course held by the Insti
 Supervisor: **[Tomasz Mańkowski]**
 
 [Game]: <https://github.com/PUT-PTM/STMInvaders/tree/master/Game>
-[STM_Project]: <https://github.com/PUT-PTM/STMInvaders/tree/master/STM_Project>
+[STM_CONTROLLER]: <https://github.com/PUT-PTM/STMInvaders/tree/master/STM_CONTROLLER>
 [TODO]: <https://github.com/PUT-PTM/STMInvaders/blob/master/TODO.md>
 [Rafał Kopczyński]: <https://github.com/rkopczynski>
 [Artur Jędryczkowski]: <https://github.com/Martsan324>
