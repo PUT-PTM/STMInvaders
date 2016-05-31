@@ -3,7 +3,6 @@
 Overview
 --------
 >- [Game] Folder with Unity3d game and other things related to game
->- [Licenses] Folder with all licenses of source code
 >- [STM_Project] Folder with Coocox project
 
 Description
@@ -52,7 +51,7 @@ Attributions
 
 License
 -------
-Section TODO
+MIT license - see [LICENSE]
 
 Credits
 -------
@@ -65,7 +64,6 @@ The project was conducted during the Microprocessor Lab course held by the Insti
 Supervisor: **[Tomasz Mańkowski]**
 
 [Game]: <https://github.com/PUT-PTM/STMInvaders/tree/master/Game>
-[Licenses]: <https://github.com/PUT-PTM/STMInvaders/tree/master/Licenses>
 [STM_Project]: <https://github.com/PUT-PTM/STMInvaders/tree/master/STM_Project>
 [TODO]: <https://github.com/PUT-PTM/STMInvaders/blob/master/TODO.md>
 [Rafał Kopczyński]: <https://github.com/rkopczynski>
@@ -74,3 +72,4 @@ Supervisor: **[Tomasz Mańkowski]**
 [Coocox CoIDE]: <http://www1.coocox.org/CoIDE/CoIDE_Updates.htm>
 [Unity3D]: <www.Unity3d.com>
 [Microsoft Visual Studio 2015]: <https://www.visualstudio.com/>
+[LICENSE]: <https://github.com/PUT-PTM/STMInvaders/tree/master/LICENSE>
