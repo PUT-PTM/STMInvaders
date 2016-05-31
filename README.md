@@ -67,7 +67,7 @@ Supervisor: **[Tomasz Mańkowski]**
 [Game]: <https://github.com/PUT-PTM/STMInvaders/tree/master/Game>
 [Licenses]: <https://github.com/PUT-PTM/STMInvaders/tree/master/Licenses>
 [STM_Project]: <https://github.com/PUT-PTM/STMInvaders/tree/master/STM_Project>
-[TODO]: <https://github.com/PUT-PTM/STMInvaders/blob/master/TODO.txt>
+[TODO]: <https://github.com/PUT-PTM/STMInvaders/blob/master/TODO.md>
 [Rafał Kopczyński]: <https://github.com/rkopczynski>
 [Artur Jędryczkowski]: <https://github.com/Martsan324>
 [Tomasz Mańkowski]: <https://github.com/Tomasz-Mankowski>
