@@ -10,10 +10,6 @@ char data[6]={'_','_','_','_','_','X'};
 char sound = '_';
 char lastSound = '_';
 
-#define AccReadX(void)	LIS302DL_Read(&acc_x, LIS302DL_OUT_X_ADDR, 1)
-#define AccReadY(void)	LIS302DL_Read(&acc_y, LIS302DL_OUT_Y_ADDR, 1)
-#define AccReadZ(void)	LIS302DL_Read(&acc_z, LIS302DL_OUT_Z_ADDR, 1)
-
 void AccInit(){
 	LIS302DL_InitTypeDef AccInitStr;
 	AccInitStr.Axes_Enable = LIS302DL_XYZ_ENABLE;
@@ -25,9 +21,9 @@ void AccInit(){
 }
 
 void UpdateAccGlobals(){
-	AccReadX();
-	AccReadY();
-	AccReadZ();
+	LIS302DL_Read(&acc_x, LIS302DL_OUT_X_ADDR, 1);
+	LIS302DL_Read(&acc_y, LIS302DL_OUT_Y_ADDR, 1);
+	LIS302DL_Read(&acc_z, LIS302DL_OUT_Z_ADDR, 1);
 }
 
 #endif

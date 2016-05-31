@@ -8,17 +8,20 @@
 #include "usbd_desc.h"
 #include "usbd_cdc_vcp.h"
 #include "usb_dcd_int.h"
-#include "accelerometer.h"
 #include "tm_stm32f4_delay.h"
 #include "defines.h"
 #include "stm32f4xx_tim.h"
-//^^usb etc
-//my sounds
+#include "stm32f4_discovery_lis302dl.h"
 #include "sounds.h"
 #include "initialization.h"
 
 volatile uint32_t ticker;//, downTicker;
-
+uint8_t acc_x;
+uint8_t acc_y;
+uint8_t acc_z;
+char data[6]={'_','_','_','_','_','X'};
+char sound = '_';
+char lastSound = '_';
 /*
  * The USB data must be 4 byte aligned if DMA is enabled. This macro handles
  * the alignment, if necessary (it's actually magic, but don't tell anyone).
@@ -55,11 +58,14 @@ void OTG_FS_WKUP_IRQHandler(void);
 
 
 
+
 int main(void)
 {
 	unsigned int i;
 	int timerValue;
 	char buffer[10];
+
+
 	Global_Init();
 
 	while (1){
