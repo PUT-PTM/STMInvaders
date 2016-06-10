@@ -62,14 +62,11 @@ void OTG_FS_WKUP_IRQHandler(void);
 int main(void)
 {
 	unsigned int i;
-	int timerValue;
 	char buffer[10];
-
 
 	Global_Init();
 
 	while (1){
-		timerValue = TIM_GetCounter(TIM2);
 		// Updating accelerometer
 		UpdateAccGlobals();
 		
@@ -109,7 +106,6 @@ int main(void)
 
 		}
 		if(TIM_GetFlagStatus(TIM2,TIM_FLAG_Update) == 1){
-		//if(timerValue==50){
 			//sending data
 			VCP_send_buffer(&data,6);
 			for(i=0; i<5; i++){

@@ -16,11 +16,11 @@ namespace STMInputDLLTester {
 			Stopwatch t = new Stopwatch();
 			t.Start();
 			while (true) {
-				if (STM_Input.GetButton()) {
-					STM_Input.RunSound("shoot");
-				}
+				//if (STM_Input.GetButton()) {
+				//	STM_Input.RunSound("shoot");
+				//}
 				//Thread.Sleep(100);
-				//Console.WriteLine(STM_Input.Input + " " + i++);
+				Console.WriteLine(STM_Input.Input + " " + i++);
 				/*if(t.ElapsedMilliseconds > 1000) {
 					STM_Input.RunSound("explode");
 					t.Restart();

@@ -58,13 +58,16 @@ void UpdateAccGlobals(){
 	LIS302DL_Read(&acc_z, LIS302DL_OUT_Z_ADDR, 1);
 }
 
+//timer/period * presc
+//
+
 void Timer_Init()
 {
 	   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
 				TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-				TIM_TimeBaseStructure.TIM_Period = 40000;
+				TIM_TimeBaseStructure.TIM_Period = 42000;
 				TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-				TIM_TimeBaseStructure.TIM_Prescaler = 50;
+				TIM_TimeBaseStructure.TIM_Prescaler = 20;
 				TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 				TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
 				TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
