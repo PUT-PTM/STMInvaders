@@ -14,6 +14,8 @@
 #include "stm32f4_discovery_lis302dl.h"
 #include "sounds.h"
 #include "initialization.h"
+#include "stm32f4xx_syscfg.h"
+#include "misc.h"
 
 volatile uint32_t ticker;//, downTicker;
 uint8_t acc_x;
@@ -51,6 +53,7 @@ void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void OTG_FS_IRQHandler(void);
 void OTG_FS_WKUP_IRQHandler(void);
+
 
 #ifdef __cplusplus
 }
@@ -109,7 +112,7 @@ int main(void)
 
 		}
 
-		if(timerValue==50){
+		if(TIM_GetFlagStatus(TIM2, TIM_FLAG_Update) == 1){
 			//sending data
 			VCP_send_buffer(&data,6);
 			for(i=0; i<5; i++){
@@ -126,6 +129,7 @@ int main(void)
 				GPIOD->BSRRH = 0x1000;
 				GPIOD->BSRRH = 0x2000;
 				GPIOD->BSRRH = 0x8000;
+				TIM_ClearFlag(TIM2,TIM_FLAG_Update);
 		}
 	}
 	return 0;
