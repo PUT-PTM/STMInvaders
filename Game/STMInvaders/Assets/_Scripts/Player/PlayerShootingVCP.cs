@@ -31,10 +31,11 @@ public class PlayerShootingVCP : MonoBehaviour {
 			if (vcp) {
 				if (bulletTimer <= 0 && vcp.GetButton()) {
 					AddBullet();
-					if(makeSound) {
+					vcp.RunSound("shoot");
+					/*if(makeSound) {
 						vcp.RunSound("shoot");
 						makeSound = false;
-					}
+					}*/
 					magazine--;
 					bulletTimer = 0.1f;
 				}
@@ -44,10 +45,10 @@ public class PlayerShootingVCP : MonoBehaviour {
 			else {
 				if (bulletTimer <= 0 && Input.GetKey(KeyCode.Space)) {
 					AddBullet();
-					if (makeSound) {
+					/*if (makeSound) {
 						vcp.RunSound("shoot");
 						makeSound = false;
-					}
+					}*/
 					magazine--;
 					bulletTimer = 0.1f;
 				}
