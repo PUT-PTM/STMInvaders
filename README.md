@@ -49,6 +49,7 @@ See [TODO], there is list of some planned features.
 Attributions
 ------------
 >- https://github.com/xenovacivus/STM32DiscoveryVCP
+>- http://www.mind-dump.net/configuring-the-stm32f4-discovery-for-audio
 
 License
 -------
