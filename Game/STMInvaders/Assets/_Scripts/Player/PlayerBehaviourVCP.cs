@@ -30,11 +30,15 @@ public class PlayerBehaviourVCP : MonoBehaviour {
 			rb = GetComponent<Rigidbody2D>();
 			shield = GetComponentInChildren<RespawnShield>();
 		} else Debug.LogError("No reference to LIFES");
-		if ((vcp = new STMInput())) {
+		vcp = new STMInput(Statics.VCP_PORT);
+		if (vcp) {
 			vcpThread = new Thread(vcp.Run);
 			vcpThread.Priority = System.Threading.ThreadPriority.AboveNormal;
 			vcpThread.Start();
-		} else Debug.LogError("Something wrong with VCP My Fabulous masterrrr...");
+		} else {
+			Debug.LogError("Something wrong with VCP My Fabulous masterrrr...");
+			Debug.LogError("STM message: " + STMInput.GetErrorMessage());
+		}
 	}
 	// Checking axis and moving player
 	private	float x, y;

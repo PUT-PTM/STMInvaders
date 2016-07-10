@@ -9,10 +9,9 @@ public class InGameMenu : MonoBehaviour {
 	// offset is part of field between controls and GUI borders
 	private float x, y;
 	private float offX, offY;
-	private bool pause;
 
 	void Start() {
-		pause = false;
+		//TODO stop movement
 		x = Screen.width;
 		y = Screen.height;
 		offX = 0.1f * width;
@@ -21,13 +20,13 @@ public class InGameMenu : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			pause = !pause;
-			if (pause) Time.timeScale = 0f;
+			Statics.GAME_PAUSE = !Statics.GAME_PAUSE;
+			if (Statics.GAME_PAUSE) Time.timeScale = 0f;
 			else Time.timeScale = 1f;
 		}
 	}
 	void OnGUI() {
-		if (pause) {
+		if (Statics.GAME_PAUSE) {
 			GUI.Box(new Rect(x / 2 - width / 2, y / 2 - height / 2 - offY * 2, width, height * 0.7f), "Game menu");
 			if (GUI.Button(new Rect(
 					x / 2 - width / 2 + offX, y / 2 - height / 2 + offY * 0,

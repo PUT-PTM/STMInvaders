@@ -4,10 +4,11 @@ using System.IO.Ports;
 namespace STMInputDLL {
 	public partial class STMInput : IDisposable {
 		#region Class Variables
-		private SerialPort _serialPort;
+		private static SerialPort _serialPort;
 		private char[] _input = { '_', '_', '_', '_', '_' };
 		private char[] _output = { '_' };
 		private bool initOK;
+		private static string error = "NO ERROR DEFINED - maybe wrong initialization?";
 		public string Input {
 			get {
 				string val = "";
@@ -36,23 +37,25 @@ namespace STMInputDLL {
 		/// <summary>
 		/// Constructor - initialize VCP and check if everything is okey
 		/// </summary>
-		public STMInput() {
-			initOK = InitSerialPort();
+		public STMInput(string port = "") {
+			initOK = InitSerialPort(port);
 		}
 		/// <summary>
 		/// Set initial values for SerialPort.
 		/// </summary>
 		/// <returns> False if there is no VCOM port connection </returns>
-		private bool InitSerialPort() {
+		private bool InitSerialPort(string port) {
 			// Create a new SerialPort object with default settings.
-			_serialPort = new SerialPort();
-
-			// Set properties (only name could be problem, other values set to default)
-			try {
-				_serialPort.PortName = SerialPort.GetPortNames()[0];
-			} catch (ArgumentNullException) {
-				return false;
-			} catch (IndexOutOfRangeException) {
+			if (port.Length > 0) {
+				if (port.ToLower().StartsWith("com")) {
+					_serialPort = new SerialPort(port);
+				}
+				else {
+					error = "Wrong VCP name";
+					return false;
+				}
+			} else {
+				error = "No VCP name added - running default mode (keyboard play)";
 				return false;
 			}
 
@@ -91,6 +94,10 @@ namespace STMInputDLL {
 				_serialPort.Write(_output, 0, 1);
 				_output[0] = '_';
 			} catch (TimeoutException) { }
+		}
+		// Read error message
+		public static string GetErrorMessage() {
+			return error;
 		}
 		#endregion
 		#region IDisposable Support
